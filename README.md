@@ -74,3 +74,7 @@ games/verrian/art-prompts.json  provenienza delle immagini
 - Immagini generate con strumenti di intelligenza artificiale a partire dal ritratto originale del personaggio; prompt e riferimenti sono in `games/verrian/art-prompts.json` e `assets/verrian/og-verrian-v1.json`.
 - Facciata del Duomo di riferimento: [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Milan-duomo-front-facade.jpg), CC0.
 - [PixiJS](https://pixijs.com/) 8.22.0, licenza MIT (`assets/vendor/pixi-8.22.0/LICENSE`).
+
+## Licenza
+
+Codice, livelli e immagini del gioco sono distribuiti con licenza [MIT](LICENSE): si possono usare, modificare e ridistribuire liberamente, anche per scopi commerciali, mantenendo l’avviso di copyright. PixiJS resta soggetto alla propria licenza MIT (`assets/vendor/pixi-8.22.0/LICENSE`).
