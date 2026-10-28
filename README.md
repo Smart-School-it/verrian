@@ -1,6 +1,6 @@
 # Verrian — I guardiani del codice
 
-Avventura arcade 2D per il browser, nata nel laboratorio di informatica dell’I.I.S. Pietro Verri di Milano. Verrian, un cyborg custode del codice, attraversa le rovine di Milano e quattro mondi digitali: riattiva i nodi, sconfigge i bug e affronta un boss alla fine di ogni mondo.
+Avventura arcade 2D per il browser, nata nel laboratorio di informatica dell’I.I.S. Pietro Verri di Milano. Nell’anno 2148, Verrian, un cyborg custode del codice, cerca di salvare l’umanità dall’avvento scellerato dell’intelligenza artificiale. Attraversa quattro mondi digitali, a partire dalle rovine di Milano: riattiva i nodi, sconfigge i bug e affronta un boss alla fine di ogni mondo.
 
 **Gioca:** https://verrian.verri.edu.it/
 
@@ -25,6 +25,7 @@ Avventura arcade 2D per il browser, nata nel laboratorio di informatica dell’I
 | L / C | Impulso |
 | Q / E | Cambio arma |
 | ↓ + Q | Salire o scendere dal mezzo |
+| R / F (con il cannone) | Mirare in diagonale in alto / in basso |
 | P / Esc | Pausa |
 
 Su telefono e tablet compaiono i pulsanti a schermo.

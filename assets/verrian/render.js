@@ -199,7 +199,7 @@ this.waves.push({x,y,r:26*scale,speed:520*scale,width:5*scale,life:.38,max:.38,c
   else if(crouchImg)c.drawImage(crouchImg,-CROUCH.ax*CROUCH.scale,-CROUCH.h*CROUCH.scale,CROUCH.w*CROUCH.scale,CROUCH.h*CROUCH.scale);
   else if(sprite){let frame=0;if(p.attack>0)frame=p.attack>5?5:6;else if(!p.grounded)frame=4;else if(Math.abs(p.vx)>1)frame=1+Math.floor(Math.abs(p.x)/18)%3;const f=FRAMES[frame],scale=.265;c.save();if(p.crouch)c.scale(1.08,.64);c.drawImage(sprite,f.x,f.y,f.w,f.h,-f.a*scale,-f.h*scale,f.w*scale,f.h*scale);if(p.weapon==='blade'&&!p.crouch)this.art.extendBlade(c,frame,f);c.restore();}
   else{c.strokeStyle='#80efff';c.fillStyle='#24465f';c.lineWidth=3;c.beginPath();c.roundRect(-19,p.crouch?-46:-76,38,p.crouch?30:54,8);c.fill();c.stroke();}
-  c.restore();if(p.weapon==='blaster'){const m=VerrianArt.muzzle(p,0,0);c.save();c.translate(34,m.y);this.art.cannon(c,p.attack>=4);c.restore();}
+  c.restore();if(p.weapon==='blaster'){const m=VerrianArt.muzzle(p,0,0);c.save();c.translate(p.face*m.x,m.y);c.rotate(m.angle);this.art.cannon(c,p.attack>=4);c.restore();}
   if(p.crouch&&p.weapon==='blade'){c.save();c.translate(23,-28);this.art.crouchBlade(c);c.restore();}
   if(p.dash>0){c.strokeStyle='#8ff3ff88';c.lineWidth=3;for(let i=0;i<3;i++){c.beginPath();c.moveTo(-35-i*18,-80+i*22);c.lineTo(-85-i*22,-80+i*22);c.stroke();}}c.restore();}
  enemy(e,l,t){const c=this.ctx,color=this.tick-e.hitTick<4?'#ffffff':e.type==='phase'?'#d4a1ff':e.type==='sentinel'?'#ff9fbb':e.type==='leaper'?'#8dffb8':e.type==='mite'?'#ff8a8a':e.type==='turret'?'#ffb27a':e.type==='wraith'?'#a8dcff':'#ffca8f';c.strokeStyle=color;c.lineWidth=2;

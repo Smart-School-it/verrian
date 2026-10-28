@@ -64,3 +64,6 @@
 
 /* Narrow phones: the touch actions wrap instead of overflowing the cabinet */
 @media(max-width:520px){.vr-touch{flex-wrap:wrap;justify-content:center}.vr-touch-actions{flex-wrap:wrap;justify-content:center}}
+
+/* Directional cannon aim supports simultaneous touch with fire and movement. */
+.vr-touch [data-aim][hidden]{display:none}.vr-touch [data-aim][aria-pressed=true]{background:#24566a;border-color:#abf4ff;box-shadow:inset 0 0 0 1px #c3f8ff55}.vr-touch-actions{flex-wrap:wrap}

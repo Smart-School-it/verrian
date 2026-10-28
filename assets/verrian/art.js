@@ -27,7 +27,7 @@ class Art{
    for(const wrap of [-width,0,width]){c.save();c.translate(cx+wrap,cy);c.scale(rx,ry);const g=c.createRadialGradient(0,0,0,0,0,1);g.addColorStop(0,'#173144b8');g.addColorStop(.42,'#1c3a4b70');g.addColorStop(1,'#223c4e00');c.fillStyle=g;c.fillRect(-1,-1,2,2);c.restore();}
   }
  }
- static muzzle(p,x=p.x,y=p.y){return {x:x+p.face*34,y:y-(p.crouch?12:50)};}
+ static muzzle(p,x=p.x,y=p.y){return VerrianCore.blasterPose(p,x,y);}
  static shotTrail(h,alpha=1){return h.kind==='shot'?Math.min(3,Math.max(0,h.age-1+alpha)):3;}
  static wingKind(p,r,dt){const target=p.gliding?1:0;r.wingSpread=r.reduced||r.wingSpread===undefined?target:r.wingSpread+(target-r.wingSpread)*(1-Math.exp(-dt*14));return r.wingSpread>.85?'wings':r.wingSpread>.15?'wings-half':'wings-folded';}
  crouchBlade(c){c.save();c.rotate(.55);c.fillStyle='#1d3546';c.strokeStyle='#8aa7ba';c.lineWidth=1.3;c.beginPath();c.roundRect(-6,-3,10,6,2);c.fill();c.stroke();c.strokeStyle='#287e9d';c.lineWidth=6;c.beginPath();c.moveTo(4,0);c.lineTo(38,0);c.stroke();c.strokeStyle='#58e1ff';c.lineWidth=3;c.stroke();c.strokeStyle='#e1ffff';c.lineWidth=1;c.stroke();c.restore();}
