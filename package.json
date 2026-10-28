@@ -1,0 +1,12 @@
+{
+  "name": "verrian",
+  "version": "1.0.0",
+  "description": "Verrian — I guardiani del codice: avventura arcade 2D per il browser",
+  "private": true,
+  "homepage": "https://verrian.verri.edu.it/",
+  "scripts": {
+    "test": "node tests/core.test.cjs && node tests/art.test.cjs",
+    "start": "python3 -m http.server 8000"
+  },
+  "engines": { "node": ">=18" }
+}

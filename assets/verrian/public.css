@@ -1,0 +1,14 @@
+/* Public edition (verrian.verri.edu.it): standalone page around the game cabinet, without the platform chrome. */
+:root{--ink:#e3eef7;--muted:#9fb4c6;--line:#2b4158;--white:#0f1c2c;--soft:#15263a;--accent:#8ff3ff;--accent-soft:#1b3a4d;--field-border:#3d5871;--paper:#07101d;color-scheme:dark;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--ink);background:var(--paper)}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:radial-gradient(120% 70% at 50% 0,#13243a 0,var(--paper) 62%);color:var(--ink)}
+a{color:#9ff0ff}
+.vp-main{max-width:1500px;margin:0 auto;padding:18px 16px 40px}
+.vp-foot{max-width:1500px;margin:0 auto;padding:0 16px 28px;font-size:.75rem;color:var(--muted);display:flex;flex-wrap:wrap;gap:6px 18px;justify-content:space-between}
+.eyebrow{font-size:.6875rem;font-weight:750;letter-spacing:1.6px;color:#8fd8ea;margin:0 0 8px}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}
+kbd{font:600 .78em ui-monospace,monospace;padding:2px 6px;border:1px solid var(--line);border-bottom-width:2px;border-radius:6px;background:var(--soft);color:var(--ink)}
+button{font:inherit}
+:focus-visible{outline:2px solid #9ff0ff;outline-offset:2px}
+.vr-controls,.vr-worlds,.vr-history,.vr-help{color:var(--ink)}
+@media(max-width:700px){.vp-main{padding:10px 10px 28px}}

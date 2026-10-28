@@ -1,0 +1,13 @@
+{
+  "tool": "image_gen.imagegen (built-in)",
+  "source": "assets/verrian/og-verrian-source-v1.png",
+  "runtime_path": "assets/verrian/og-verrian-v1.jpg",
+  "width": 1200,
+  "height": 630,
+  "references": [
+    "assets/verrian/verrian-portrait.png",
+    "assets/verrian/milano-duomo-v1.webp"
+  ],
+  "prompt": "Use case: ads-marketing / stylized-concept. Asset type: polished Open Graph social sharing cover for the original browser arcade VERRIAN. Create a NEW horizontal landscape 1.905:1 composition, intended final size 1200 x 630 pixels. Reference 1 defines the exact protagonist identity: Verrian, an adult male cyborg with swept brown hair, blue eyes, human face, graphite cybernetic jaw and ear implants, detailed dark armored suit with luminous cyan seams. Reference 2 is the game's ruined futuristic Milan scenery: include its recognizable damaged DUOMO DI MILANO in the atmospheric mid-background, violet dusk, cyan technology and drifting blue fog. Match this painterly dimensional premium 2.5D game art, make it look like a beautiful original arcade key art cover, not a screenshot or UI mockup. Composition: large expressive half-body Verrian in the RIGHT half, three-quarter view facing slightly left toward the title, heroic determined pose, holding a slim cyan energy sword angled down and partly along the lower edge, handsome recognizable face and richly detailed armor. A layered ruined Milan skyline with the recognizable Duomo facade and pinnacles behind, dramatic violet storm sky, subtle cyan energy sparks and soft fog. LEFT half has a deliberately darker navy gradient area providing excellent text contrast, with the readable title in the left-middle: EXACT text 'VERRIAN' in very large bold original futuristic uppercase typography, light silver-white with restrained cyan edging. Directly below title, EXACT subtitle 'I GUARDIANI DEL CODICE' in smaller spaced uppercase pale cyan letters. At lower left a small clean cyan caption, EXACT 'GIOCA NEL BROWSER'. Typography must be crisp and beautiful and naturally integrated into the key art, no invented letters, no other words or logo. Keep all text and the hero's face safely inside the central 80% of the frame with generous clear margins for social cropping. Strong visual hierarchy, cinematic depth and controlled neon glow, rich metallic material, legible at thumbnail size, professional game poster composition, no brand or characters from existing franchises, no watermark, no border, no gameplay HUD. Fully opaque image with edge-to-edge background, wide social banner proportions.",
+  "format_conversion": "Original generated PNG retained; PHP GD resampling to 1200×630 and JPEG quality 88. Source aspect ratio already matches the social cover; no creative edits."
+}

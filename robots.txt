@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://verrian.verri.edu.it/sitemap.xml
