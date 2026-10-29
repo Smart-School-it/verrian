@@ -25,9 +25,10 @@ Avventura arcade 2D per il browser, nata nel laboratorio di informatica dell’I
 
 *Scontro finale con KERNEL PANIC.*
 
-![Su smartphone in orizzontale: joystick e pulsanti trasparenti sopra il campo di gioco](docs/screenshots/smartphone.webp)
-
-*Su smartphone: schermo intero e gamepad virtuale semitrasparente.*
+| | |
+| --- | --- |
+| <img src="docs/screenshots/smartphone-verticale.webp" width="260" alt="Su smartphone in verticale: la schermata iniziale con la scuola Pietro Verri nel 2148"> | ![Su smartphone in orizzontale: joystick e pulsanti trasparenti sopra il campo di gioco](docs/screenshots/smartphone.webp) |
+| **Smartphone in verticale** · schermata iniziale | **Smartphone in orizzontale** · schermo intero e gamepad virtuale semitrasparente |
 
 ## Caratteristiche
 

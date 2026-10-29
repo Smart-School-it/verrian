@@ -73,7 +73,7 @@
 .vr-prologue h2{color:#f2faff;font-size:clamp(2rem,5vw,4.7rem);line-height:1;letter-spacing:-.05em;margin:0 0 18px}.vr-prologue h2 span{color:#a3efff}
 .vr-prologue.is-still .vr-prologue-image{animation:none;transform:none}
 @keyframes vr-prologue-drift{from{transform:scale(1.035)}to{transform:scale(1)}}
-@media(max-width:700px){.vr-prologue{padding:26px 20px;min-height:450px}.vr-prologue-image{object-position:53% 40%}.vr-prologue::before{background:linear-gradient(0deg,#030a15fc 0%,#071426e8 37%,#07142640 76%,#07142633)}.vr-prologue h2{font-size:2.6rem}.vr-prologue-place{font-size:.55rem;letter-spacing:.12em}}
+@media(max-width:700px){.vr-prologue{padding:26px 20px;min-height:450px}.vr-prologue-image{object-position:53% 40%}.vr-prologue::before{background:linear-gradient(0deg,#030a15f0 0%,#071426c4 22%,#0714264d 48%,#07142626 72%,#07142680)}.vr-prologue h2,.vr-prologue p{text-shadow:0 2px 12px #030a15e6}.vr-prologue h2{font-size:2.6rem}.vr-prologue-place{font-size:.55rem;letter-spacing:.12em}}
 @media(prefers-reduced-motion:reduce){.vr-prologue-image{animation:none;transform:none}}
 
 @media(max-height:540px){.vr-prologue{min-height:300px;padding:20px 28px}.vr-prologue h2{font-size:2.2rem;margin-bottom:10px}.vr-prologue-place{margin-bottom:8px}}
@@ -281,4 +281,37 @@
 #verrian[data-pad=on].vr-cabinet:fullscreen .vr-board{position:relative;inset:auto;flex:1 1 auto;height:auto;width:100%;min-height:0}
 #verrian[data-pad=on].vr-cabinet:fullscreen .vr-board+.vr-touchpad{flex:0 0 212px}
 #verrian[data-pad=on].vr-cabinet:fullscreen .vr-objective{top:8px}
+}
+
+/* A common visual language for the cabinet, combat information and supporting panels. */
+.vr-cabinet{border-color:#547083;box-shadow:0 28px 80px #0008,0 0 0 1px #a5e9f512,0 0 48px #429fb018}
+.vr-toolbar{background:linear-gradient(110deg,#1a3347,#101f33 56%,#0c1628);border-bottom-color:#76c4d033;box-shadow:inset 0 1px #d8faff19}
+.vr-brand img{border-color:#8dddea77;box-shadow:inset 0 0 0 1px #d4faff19,0 0 18px #53cce322}
+.vr-brand h1{color:#f2fbff;text-shadow:0 0 18px #75e2fa38}
+.vr-tools button,.vr-secondary{border-color:#56758b;background:linear-gradient(160deg,#1c344a,#132338);box-shadow:inset 0 1px #c9f5ff14}
+.vr-tools button:hover,.vr-secondary:hover{border-color:#91d4e3;background:#24485d}
+.vr-tools button[aria-pressed=true]{border-color:#9ae8f2;background:linear-gradient(145deg,#285e6c,#1c465a);box-shadow:inset 0 1px #d9ffff30,0 0 14px #73d4e518}
+.vr-tools button:disabled{box-shadow:none}
+.vr-hud{background:linear-gradient(100deg,#14283b,#101b2e 70%,#14283a);border-bottom-color:#7bb1c344;box-shadow:inset 0 1px #a7f5ff0c}
+.vr-hud strong{color:#e8faff;text-shadow:0 0 14px #91dff526;font-variant-numeric:tabular-nums}
+.vr-hud span{color:#acc9d9}.vr-health i{box-shadow:0 0 10px #73f1d250}
+.vr-objective{background:linear-gradient(135deg,#102a3bf2,#0a1425ee);border-color:#6eabc088;box-shadow:0 8px 24px #0005,inset 0 1px #d8faff18}
+.vr-route{border-top-color:#75a9bb}.vr-route i{box-shadow:0 0 6px #d3a3fa55}.vr-route i.is-active{box-shadow:0 0 7px #90ffcc88}
+.vr-under,.vr-footer{background:linear-gradient(110deg,#101f30,#0b1423);border-color:#4c6c7d99}
+.vr-dash-meter>i{background:#344a60;box-shadow:inset 0 1px 2px #0009}.vr-dash-meter b{background:linear-gradient(90deg,#68dce8,#c4f8ff);box-shadow:0 0 9px #84f4ff66}
+.vr-launch{background:linear-gradient(110deg,#a2f4fb,#9cd5ff 55%,#c7baff);border-color:#ddfaff;box-shadow:0 8px 25px #35bdd337,inset 0 1px #ffffff99}
+.vr-launch:hover{background:linear-gradient(110deg,#d4ffff,#bfdfff 65%,#dccfff);box-shadow:0 10px 30px #35bdd34a}
+.vr-welcome select,.vr-settings-grid select{border-color:#7397aa;background-color:#142c40}
+.vr-banner{text-shadow:0 3px 8px #07101f,0 0 28px #80e8ff99}
+.vr-shop,.vr-settings-dialog{border-color:#789cae;background:linear-gradient(145deg,#142a3cf7,#091524f7 72%);box-shadow:0 24px 70px #000b,inset 0 1px #d4f8ff24}
+.vr-shop-list button{border-color:#4a6d7f;background:linear-gradient(155deg,#1a3448,#102237);box-shadow:inset 0 1px #c5efff14}
+.vr-shop-list button[aria-current=true]{border-color:#b1f5ff;background:linear-gradient(145deg,#23506a,#15334b);box-shadow:0 0 0 2px #8ff3ff66,0 0 20px #6adced26}
+.vr-shop-price,.vr-result-score{text-shadow:0 0 18px #ffe0a533}
+.vr-result-grid>div{background:linear-gradient(150deg,#1b374d,#112338);border-color:#5a8295;box-shadow:inset 0 1px #e4faff20}
+.vr-coach{border-color:#80afbf;background:linear-gradient(135deg,#142e40f5,#0b1a2bf5);box-shadow:0 10px 25px #0007,inset 0 1px #e1fbff1a}
+.vr-info-grid>section,.vr-history,.vr-achievements{background:linear-gradient(145deg,#14283a,#0e1b2b 70%);border-color:#3f5d70;box-shadow:inset 0 1px #c7f3ff12,0 14px 35px #0003}
+.vr-worlds li>span{background:linear-gradient(145deg,#234a5d,#152b3e);border-color:#5b8da0;color:#b6f5ff;box-shadow:inset 0 1px #e5ffff24}
+.vr-controls kbd{background:#1b3245;border-color:#547182;box-shadow:0 2px #0b1623;color:#e5f8ff}
+@media(prefers-reduced-motion:reduce){.vr-cabinet *{animation-duration:.01ms!important;animation-iteration-count:1!important}}
+@media(forced-colors:active){.vr-cabinet,.vr-tools button,.vr-shop-list button,.vr-objective,.vr-settings-dialog{border:1px solid CanvasText}.vr-tools button:focus-visible,.vr-shop-list button:focus-visible{outline:3px solid Highlight}}
 }

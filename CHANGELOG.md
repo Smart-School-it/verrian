@@ -1,5 +1,38 @@
 # Changelog
 
+## 2026-10-29 — Smartwatch del tecnico
+
+- Aggiunto uno smartwatch al polso sinistro del tecnico in entrambe le pose; rimossi gli altri bracciali blu. Conservate le illustrazioni precedenti.
+
+## 2026-10-29 — Abbigliamento del tecnico informatico
+
+- Nuova variante con gilet da laboratorio, camicia, strumenti e tesserino, nelle pose prima e dopo la liberazione.
+- Conservate le precedenti immagini con maglione e con giacca; PNG, WebP e prompt della nuova variante inclusi.
+
+## 2026-10-29 — Variante formale del tecnico
+
+- Aggiunta una variante del tecnico con giacca e camicia, mantenendo la somiglianza, la capsula e le pose prima e dopo la liberazione.
+- Conservata la versione con maglione come riserva, oltre all’atlante originale; PNG, WebP e prompt della variante sono inclusi.
+
+## 2026-10-29 — Tecnico di laboratorio
+
+- Nuova illustrazione del tecnico da salvare, ispirata alla fotografia fornita: capsula chiusa e posa dopo la liberazione, coordinate con lo stile del gioco.
+- Originale PNG, versione WebP e prompt conservati; l’atlante precedente resta disponibile come riserva. La fotografia non è pubblicata nel progetto.
+- Verificati caricamento, allineamento, stati e ricompensa nei renderer Canvas e WebGL.
+
+## 2026-10-29 — Revisione grafica generale
+
+- Uniformati cabinet, barra, indicatori, pulsanti, officina, impostazioni, riepilogo e schede informative con superfici e bordi coerenti.
+- Ridisegnati frammenti, crediti, integrità, energia, Overdrive e cornici dei mezzi, con simboli più distinguibili e disegni condivisi in cache da Canvas e WebGL.
+- Colpi con nucleo e scie stratificate, centro delle mine più visibile e indicatore del boss più rifinito. I segnali principali rimangono visibili con effetti disattivati.
+- Estesa con intensità ridotta la nebbia ai panorami milanesi successivi al Duomo; rispettate le preferenze di movimento ridotto.
+- Nessuna modifica a livelli, collisioni, punteggi o salvataggi.
+
+
+## 2026-10-29 — Schermata iniziale su smartphone
+
+- In verticale la foto della scuola nel 2148 resta visibile in tutto il riquadro: velatura scura più leggera, concentrata solo dietro i comandi in basso, e ombra sotto titolo e racconto per mantenerli leggibili.
+
 ## 2026-10-29 — Piattaforme e ostacoli illustrati
 
 - Piattaforme sospese e mobili corazzate, con bordi luminosi, griglie, fissaggi e propulsori antigravità; rimossi i sostegni verticali decorativi.
