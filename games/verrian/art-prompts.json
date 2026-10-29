@@ -130,6 +130,39 @@
       "reference": "assets/verrian/milano-duomo-v1.webp",
       "prompt": "Original wide panoramic background painting for Verrian world 4 'Cittadella del kernel'. Match the reference's dark richly detailed painterly sci-fi quality and depth, but make a distinct final world, no Milan or cathedral. A colossal oppressive artificial-intelligence citadel: monumental dark server fortress with hexagonal armored buttresses, concentric gates of an immense central processing core in the far distance, huge orderly circuit conduits and suspended magnetic rings, layered mechanical walls and a distant mint-green energy heart. Angular severe geometric silhouettes, black titanium, dark teal and jade green palette with restrained gold warning lights. Side-on 2D platform action game background, wide horizontal panorama roughly 3:1; distant architecture in upper two thirds, lower third dark navy mist with low contrast and few details to keep foreground gameplay readable. Cinematic atmospheric depth, imposing but not bright. No foreground platforms, no characters or creatures, no lettering, no UI, no watermark.",
       "conversion": "PHP GD, WebP quality 85, original dimensions retained"
+    },
+    {
+      "asset": "milano-centrale-v1",
+      "source": "assets/verrian/milano-centrale-v1.png",
+      "runtime": "assets/verrian/milano-centrale-v1.webp",
+      "tool": "built-in imagegen",
+      "reference": "assets/verrian/forge-memory-v1.webp",
+      "landmark_reference": "https://www.italia.it/it/italia/cosa-fare/10-stazioni-ferroviarie-belle-italia-nord-sud",
+      "prompt": "Use case: style-transfer / original game background variant. Starting from the attached Verrian Forgia panorama, keep its detailed dark painterly post-apocalyptic 2148 style, amber molten-metal light, navy shadows, smoke, cyan circuit accents and wide roughly 3:1 composition. Replace the generic central industrial landmark with an unmistakably recognizable MILANO CENTRALE railway station: monumental broad pale-stone facade, massive flanking square pylons, tall recessed entrance colonnade with three large portals, sculptural rooftop groups and the enormous historic train-shed arches visible behind. Preserve the station's real low broad massing and characteristic facade proportions, visibly damaged with broken masonry, collapsed roof sections, cracks and vegetation, but still readily identifiable. Integrate the reference's memory foundries, glowing conduits, cranes and ruined futuristic structures around and behind the station, not obscuring it. The entire recognizable station facade should fit within the left-to-middle two thirds of this very wide background so it is visible in the starting game viewport. Rich atmospheric depth, architecture in the upper two thirds, lower third dark fog and low detail for foreground characters/platforms drawn by the game. No characters, enemies, foreground walkable platforms, UI, title or watermark. Preserve a restrained ruined-Milan visual identity, not fantasy Gothic architecture.",
+      "conversion": "PHP GD, WebP quality 85, original dimensions retained",
+      "original_preserved": "assets/verrian/forge-memory-v1.webp"
+    },
+    {
+      "asset": "milano-navigli-v1",
+      "source": "assets/verrian/milano-navigli-v1.png",
+      "runtime": "assets/verrian/milano-navigli-v1.webp",
+      "tool": "built-in imagegen",
+      "reference": "assets/verrian/glitch-abyss-v1.webp",
+      "landmark_reference": "https://fondoambiente.it/luoghi/chiesa-di-san-cristoforo-sul-naviglio?ldc",
+      "prompt": "Use case: style-transfer, new location variant of the attached Verrian Abisso panorama. Keep its premium detailed dark painterly post-apocalyptic 2148 art, violet and navy mist, shattered futuristic data structures and restrained cyan/magenta circuitry. Make this unmistakably MILAN'S NAVIGLIO GRANDE, NOT Venice: long straight canal with stone embankments, characteristic low-rise Lombard ochre/plaster buildings and shuttered windows, the recognizable small red-brick CHIESA DI SAN CRISTOFORO SUL NAVIGLIO with its adjoining pitched-roof facades and slender square pointed bell tower, and the small gently arched pedestrian bridge with iron railings crossing the canal in front. Church and bridge should be a clear identifiable landmark within the left-to-middle two thirds of the panorama. Depict broken bridge parapets, cracked brick, collapsed roofs, ruined embankments and abandoned urban details, while preserving the recognizable real architecture. Corrupted purple reflections and fractured data-light appear in the canal, with broken digital megastructures behind the real Milan buildings. Wide roughly 3:1 side-view game background with layered depth: canal, bridge and church in the middle distance, lower quarter softly fading into dark low-detail mist to keep overlaid game platforms and small actors readable. No foreground playable platforms, no people, enemies, gondolas, Venetian palaces, UI, title or watermark. The Milan landmarks must dominate the scene, not generic sci-fi towers.",
+      "conversion": "PHP GD, WebP quality 85, original dimensions retained",
+      "original_preserved": "assets/verrian/glitch-abyss-v1.webp"
+    },
+    {
+      "asset": "milano-castello-v1",
+      "source": "assets/verrian/milano-castello-v1.png",
+      "runtime": "assets/verrian/milano-castello-v1.webp",
+      "tool": "built-in imagegen",
+      "reference": "assets/verrian/kernel-citadel-v1.webp",
+      "landmark_reference": "https://en.wikiarquitectura.com/cast_sforzesco_torre_del_filarete_2-2/",
+      "prompt": "Use case: style-transfer, new Milan location variant of the attached Verrian kernel citadel background. Keep the original detailed dark painterly post-apocalyptic 2148 style, charcoal titanium, teal/jade glow, concentric distant energy structures, mist and imposing scale. The main landmark must be the REAL CASTELLO SFORZESCO IN MILAN, unmistakably recognizable from the Piazza Castello front: long low red-brick crenellated curtain walls, cylindrical corner towers, and the distinctive tall central TORRE DEL FILARETE with its large square lower block and entrance arch, circular clock and stacked narrower upper tiers crowned by its small belfry/lantern. Preserve these characteristic real proportions and the broad symmetrical historic facade; do not turn it into a Gothic cathedral or generic fantasy castle. Show the tower and most of the front facade within the left-to-middle two thirds of the wide panorama for visibility in the starting game viewport. Ruined in the year 2148: partly broken battlements and upper masonry, cracks, collapsed stretches of walls, rubble and creeping vegetation, but retain the recognizable clock tower silhouette. Surround and interweave the castle with the reference's ruined AI server citadel, discreet mint circuit conduits and far energy rings, keeping the historic Milan landmark dominant. Wide roughly 3:1 side-on game background, architectural detail in upper two thirds; lower third dark soft haze and low detail so overlaid actors and playable platforms remain legible. No characters, enemies, foreground playable platforms, UI, title or watermark.",
+      "conversion": "PHP GD, WebP quality 85, original dimensions retained",
+      "original_preserved": "assets/verrian/kernel-citadel-v1.webp"
     }
   ],
   "notes": "Generated assets are used directly. Frame rectangles are selected at runtime; no source portrait has been overwritten."

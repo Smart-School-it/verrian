@@ -144,7 +144,9 @@
 @media(max-width:700px) and (min-height:541px){#verrian[data-state=idle] .vr-board canvas{position:absolute;inset:0}}
 
 /* Resume and touch controls keep the essential actions directly reachable. */
-.vr-resume-button{width:100%;margin:0 0 10px;border-color:#81cbb9;background:#183d42;color:#c9fff0}
+.vr-resume-button{flex:1;margin:0;border-color:#81cbb9;background:#183d42;color:#c9fff0}.vr-resume-button:hover{background:#1f5056}
+.vr-launch-actions.has-resume .vr-launch{flex:0 1 auto}
+@media(max-width:520px){.vr-launch-actions.has-resume{flex-wrap:wrap}.vr-launch-actions.has-resume>#vr-demo{flex-basis:100%}}
 .vr-touch-main{display:flex;gap:6px}.vr-touch-actions[hidden],.vr-touch [data-context][hidden]{display:none}
 .vr-touch-tip{flex:1 0 100%;font-size:.65rem;line-height:1.4;color:#bbd5e8;margin:3px 0 0}
 #vr-touch-more{font-size:1.5rem;line-height:1;min-width:44px;min-height:48px}
@@ -221,3 +223,62 @@
 @media(prefers-reduced-motion:reduce){.vr-banner.is-visible{animation:none}}
 
 #verrian[data-effects=off] .vr-prologue-image{animation:none;transform:none}
+
+/* Virtual gamepad for touch screens: floating joystick on the left, round buttons on the right.
+   Landscape: over the field, translucent. Portrait: a controller panel below the field. */
+.vr-touchpad{display:none}
+@media(pointer:coarse){
+#verrian[data-pad=on] .vr-touch{display:none}
+#verrian[data-pad=on]:is([data-state=playing],[data-state=paused]) .vr-touchpad{display:flex}
+.vr-touchpad{justify-content:space-between;align-items:stretch;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
+.vr-stick-zone{position:relative;flex:1 1 50%;touch-action:none}
+.vr-stick{position:absolute;left:96px;bottom:auto;top:calc(100% - 96px);width:124px;height:124px;margin:-62px 0 0 -62px;border-radius:50%;background:radial-gradient(circle,#0a182a66 0,#0a182a99 60%,#9fe9ff33 61%,#9fe9ff1a 100%);border:2px solid #9fe9ff55;pointer-events:none;transition:opacity .15s}
+.vr-stick:not(.is-active){opacity:.6}
+.vr-stick.is-active{border-color:#bff4ffaa}
+.vr-stick-knob{position:absolute;left:50%;top:50%;width:56px;height:56px;margin:-28px 0 0 -28px;border-radius:50%;background:radial-gradient(circle at 40% 35%,#d9f8ffdd,#6fc9e8bb 55%,#2b6f8acc);box-shadow:0 2px 10px #0008,inset 0 0 0 1px #ffffff55}
+.vr-pad-buttons{position:relative;flex:0 0 238px;height:196px;align-self:flex-end;margin:0 14px 10px 0}
+.vr-pad-btn{position:absolute;border-radius:50%;border:2px solid #b7ecff66;background:#0d2236a6;color:#eafaff;font-family:inherit;font-size:.64rem!important;font-weight:800;line-height:1;letter-spacing:0;text-shadow:0 1px 2px #000a;touch-action:none;display:grid;place-items:center;padding:0;box-shadow:0 3px 12px #0006;-webkit-tap-highlight-color:transparent}
+.vr-pad-btn:active,.vr-pad-btn[aria-pressed=true]{background:#2b6a86d9;border-color:#d4f8ff;transform:scale(.94)}
+.vr-pad-jump{width:78px;height:78px;right:0;bottom:0;font-size:.74rem!important;background:#145049b3;border-color:#8fffe0aa}
+.vr-pad-attack{width:78px;height:78px;right:88px;bottom:22px;font-size:.74rem!important;background:#2b3f73b3;border-color:#aebcffaa}
+.vr-pad-dash{width:58px;height:58px;right:12px;bottom:90px}
+.vr-pad-pulse{width:58px;height:58px;right:150px;bottom:104px;background:#3a2a63a6;border-color:#d2b4ff88}
+.vr-pad-small{width:46px;height:46px;font-size:.8rem!important}
+.vr-pad-weapon{right:82px;bottom:118px}
+.vr-pad-vehicle{right:184px;bottom:40px}
+.vr-pad-aim-up{right:76px;bottom:166px}
+.vr-pad-aim-down{right:184px;bottom:-4px}
+.vr-touchpad [hidden]{display:none}
+/* Landscape: overlay on the field, which fills the visible height. */
+@media(orientation:landscape){
+.vr-board>.vr-touchpad{position:absolute;inset:0;z-index:3;pointer-events:none}
+.vr-board>.vr-touchpad>*{pointer-events:auto}
+/* Over the field the controls stay faint until touched. */
+.vr-board>.vr-touchpad .vr-pad-btn{opacity:.38;box-shadow:none}
+.vr-board>.vr-touchpad .vr-pad-btn:active,.vr-board>.vr-touchpad .vr-pad-btn[aria-pressed=true]{opacity:.75}
+.vr-board>.vr-touchpad .vr-stick:not(.is-active){opacity:.25}
+.vr-board>.vr-touchpad .vr-stick.is-active{opacity:.6}
+.vr-board>.vr-touchpad .vr-stick-zone{max-width:46%;margin-top:28%}
+#verrian[data-pad=on] .vr-board{height:calc(100dvh - 12px);width:min(100%,calc((100dvh - 12px)*16/9));min-height:0;max-height:none}
+#verrian[data-pad=on].vr-cabinet:fullscreen .vr-board{height:100dvh;width:100%}
+#verrian[data-pad=on].vr-cabinet:fullscreen .vr-hud,#verrian[data-pad=on].vr-cabinet:fullscreen .vr-under{opacity:.85}
+#verrian[data-pad=on]:is([data-state=playing],[data-state=paused]) .vr-coach{left:50%;bottom:auto;top:12px;transform:translateX(-50%);max-width:min(420px,44%)}
+#verrian[data-pad=on].vr-cabinet:fullscreen:is([data-state=playing],[data-state=paused]) .vr-coach{top:96px}
+}
+/* Portrait: controller panel under the field. */
+@media(orientation:portrait){
+.vr-board+.vr-touchpad{height:212px;padding:6px 0 0;background:#0a1626;border-top:1px solid #2d4a63}
+.vr-board+.vr-touchpad .vr-pad-buttons{margin-bottom:8px}
+}
+}
+/* Phone held upright in full screen: toolbar, compact HUD, field and controller stacked in one column. */
+@media(pointer:coarse) and (orientation:portrait){
+#verrian[data-pad=on].vr-cabinet:fullscreen{display:flex;flex-direction:column}
+#verrian[data-pad=on].vr-cabinet:fullscreen .vr-toolbar{position:static;flex:0 0 auto;padding:8px 10px 6px;background:#030812;pointer-events:auto}
+#verrian[data-pad=on].vr-cabinet:fullscreen .vr-hud{position:static;flex:0 0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:4px 10px;padding:4px 12px 8px;background:#030812;pointer-events:auto}
+#verrian[data-pad=on].vr-cabinet:fullscreen .vr-health{width:auto}
+#verrian[data-pad=on].vr-cabinet:fullscreen .vr-health i{display:none}
+#verrian[data-pad=on].vr-cabinet:fullscreen .vr-board{position:relative;inset:auto;flex:1 1 auto;height:auto;width:100%;min-height:0}
+#verrian[data-pad=on].vr-cabinet:fullscreen .vr-board+.vr-touchpad{flex:0 0 212px}
+#verrian[data-pad=on].vr-cabinet:fullscreen .vr-objective{top:8px}
+}

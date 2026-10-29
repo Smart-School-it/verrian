@@ -9,7 +9,7 @@ function binding(custom,action,code){if(!ACTIONS[action]||!validKey(code))return
 const keyLabel=code=>({ArrowLeft:'←',ArrowRight:'→',ArrowUp:'↑',ArrowDown:'↓',Space:'Spazio',ShiftLeft:'Shift sx',ShiftRight:'Shift dx'}[code]||code.replace('Key',''));
 const QUALITY={low:{particles:.3,fps:30},standard:{particles:.7,fps:60},high:{particles:1,fps:60}};
 const HINTS=[
- {id:'move',title:'Esplora le rovine',text:'Muoviti con ← → oppure A e D. Su touch usa le frecce.',done:w=>Math.abs(w.player.x-100)>80},
+ {id:'move',title:'Esplora le rovine',text:'Muoviti con ← → oppure A e D. Su touch trascina il joystick a sinistra.',done:w=>Math.abs(w.player.x-100)>80},
  {id:'jump',title:'Supera gli ostacoli',text:'Spazio o ↑ per saltare. Premi ancora in aria per il doppio salto.',done:w=>w.player.jumps>0},
  {id:'attack',title:'Difendi il codice',text:'J o X per attaccare. Tre fendenti di seguito spezzano gli scudi.',done:w=>w.player.attack>0||w.kills>0},
  {id:'dash',title:'Schiva e contrattacca',text:'K o Shift per lo scatto. Su touch apri ⋯ e scegli Scatto.',done:w=>w.player.dash>0||w.dodges>0},

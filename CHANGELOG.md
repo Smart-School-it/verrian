@@ -1,5 +1,61 @@
 # Changelog
 
+## 2026-10-29 — Piattaforme e ostacoli illustrati
+
+- Piattaforme sospese e mobili corazzate, con bordi luminosi, griglie, fissaggi e propulsori antigravità; rimossi i sostegni verticali decorativi.
+- Terreno con pannelli metallici, rinforzi, prese d’aria e segni di usura; punte con lame metalliche, inserti luminosi e fasce di pericolo.
+- Emettitori laser con stati spento/preavviso/attivo distinti; barriere fratturabili con pannelli e crepe progressive.
+- Nuovo modulo grafico condiviso `terrain-art.js`: immagini nella cache e sprite riutilizzati in WebGL. Aggiornamento della grafica statica quando si attivano o disattivano gli effetti.
+- Regole, geometria dei livelli, collisioni e punteggi invariati. Verificati i quattro mondi in Canvas/WebGL, i margini delle immagini, gli stati dei laser e gli effetti ridotti su smartphone.
+
+## 2026-10-29 — Milano 2148 e sfondi originali selezionabili
+
+- Nuovi panorami di Stazione Centrale, Naviglio Grande e Castello Sforzesco, diroccati e coerenti con le palette dei mondi. Conservati Duomo, scuola e tutti gli sfondi digitali originali.
+- Selettore Ambientazione nelle impostazioni: Milano 2148 predefinita oppure Mondi digitali; scelta persistente nel browser e cambio durante la pausa senza modificare la partita.
+- Luoghi indicati nel menu, nell’HUD e nei passaggi di mondo; caricamento al bisogno e cache separate per entrambe le varianti in Canvas e WebGL.
+- Originali PNG, WebP ottimizzati e prompt con riferimenti di stile conservati. Estesi i controlli di associazione degli sfondi e delle preferenze; motore e configurazione dei livelli invariati.
+
+
+## 2026-10-29 — Il guardiano del codice
+
+- Sottotitolo corretto in «Il guardiano del codice» (Verrian è un solo guardiano): titolo della pagina, anteprime social, dati strutturati, configurazione dei mondi, README e trailer.
+- Nuova immagine Open Graph `og-verrian-v2.jpg`, ricavata dall’originale ad alta risoluzione corretto (`og-verrian-source-v2.png`), con «IL GUARDIANO DEL CODICE» e «GIOCA SUBITO» al posto di «GIOCA NEL BROWSER»; testo alternativo aggiornato. Le versioni v1 restano come originali.
+- Trailer rigenerato (`verrian-trailer-v2.webm`) con la nuova copertina e «Gioca subito: gratis e senza account».
+
+## 2026-10-29 — Video promozionale
+
+- Trailer di 62 secondi (1280×720, WebM VP8 + Opus) in `assets/verrian/video/verrian-trailer-v2.webm`, con copertina `verrian-trailer-v2-poster.png`: copertina, Milano, primo boss, i quattro mondi, scontro finale con KERNEL PANIC e schermata con l’indirizzo del gioco.
+- Riprese reali del gioco (renderer Canvas) guidate dalla partita vincente dei test, con musica ed effetti del gioco; titoli e sottotitoli composti nel browser. Script per rigenerarlo in `scripts/trailer/`.
+
+## 2026-10-29 — Avvio su smartphone
+
+- Sui dispositivi touch la partita (e la demo) parte a schermo intero, in verticale e in orizzontale.
+- Musica e suoni sono accesi di base sugli smartphone e restano spenti sui computer; la scelta fatta con i pulsanti viene ricordata.
+- Schermo intero in verticale: barra, indicatori compatti, campo e controller disposti in colonna.
+
+## 2026-10-29 — Gamepad virtuale per smartphone
+
+- Comandi touch in stile gioco Android: joystick mobile a sinistra (destra/sinistra, in basso per abbassarsi) e pulsanti rotondi a destra per Salta, Lama/Spara, Scatto e Impulso; Arma, Mezzo e Mira compaiono quando servono. Più dita insieme e breve vibrazione alla pressione.
+- In orizzontale il gamepad è semitrasparente sopra il campo e la partita parte a schermo intero; in verticale diventa un pannello sotto il campo.
+- In orizzontale pulsanti e joystick restano molto trasparenti finché non si toccano.
+- Opzione «Comandi touch sovrapposti al gioco (joystick)» nelle impostazioni per tornare alla barra classica; suggerimenti del tutorial aggiornati.
+
+## 2026-10-29 — Musica e suoni separati
+
+- Due interruttori indipendenti nella barra e nelle impostazioni: «Musica» (sottofondo, anche nel menu) e «Suoni» (effetti del gioco).
+- Scelte ricordate nel browser; dopo un ricaricamento l’audio riparte al primo clic o tasto, come richiesto dai browser. Spenti alla prima visita.
+
+## 2026-10-29 — Riprendi accanto a Nuova partita
+
+- Con una partita salvata, «Riprendi la partita» compare sulla stessa riga di «Nuova partita», che si restringe; sui telefoni «Guarda la demo» va a capo.
+
+## 2026-10-29 — Tema musicale originale
+
+- Nuovo tema «Custodi del 2148» generato in tempo reale con Web Audio, senza file audio: riff in minore orecchiabile, con tritono e seconda bemolle per un tono inquieto.
+- Quattro sezioni che si alternano (introduzione, tema, tema con eco di campanelli, pausa da carillon); tonalità e tempo diversi per ciascun mondo.
+- La musica si ferma in pausa, nell’officina, a scheda nascosta e con l’opzione «Musica dei mondi» disattivata; segue il volume generale.
+- Eliminati i clic udibili all’avvio di suoni ed effetti (guadagno iniziale a zero).
+
 ## 2026-10-29 — Tutorial, officina, mondi e impostazioni
 
 - Tutorial contestuale, mappa dei nodi, indicazioni di vulnerabilità dei boss e quattro traguardi locali persistenti.
