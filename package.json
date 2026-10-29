@@ -6,7 +6,7 @@
   "license": "MIT",
   "homepage": "https://verrian.verri.edu.it/",
   "scripts": {
-    "test": "node tests/core.test.cjs && node tests/art.test.cjs",
+    "test": "node tests/core.test.cjs && node tests/art.test.cjs && node tests/local.test.cjs && node tests/experience.test.cjs",
     "start": "python3 -m http.server 8000"
   },
   "engines": { "node": ">=18" }

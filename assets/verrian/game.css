@@ -67,23 +67,157 @@
 
 /* Directional cannon aim supports simultaneous touch with fire and movement. */
 .vr-touch [data-aim][hidden]{display:none}.vr-touch [data-aim][aria-pressed=true]{background:#24566a;border-color:#abf4ff;box-shadow:inset 0 0 0 1px #c3f8ff55}.vr-touch-actions{flex-wrap:wrap}
-
-/* Cinematic prologue: a static story outside the game clock, with an optional gentle camera drift. */
-#verrian[data-state=intro] .vr-hud,#verrian[data-state=intro] .vr-objective,#verrian[data-state=intro] .vr-under,#verrian[data-state=intro] .vr-touch{display:none}
-.vr-overlay.vr-prologue-overlay{display:block;padding:0;background:#07101d;backdrop-filter:none;overflow:auto}
 .vr-prologue{position:relative;isolation:isolate;min-height:100%;display:flex;align-items:flex-end;padding:clamp(24px,4vw,64px);overflow:hidden;background:#07101d}
 .vr-prologue-image{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 48%;z-index:-2;animation:vr-prologue-drift 16s ease-out both}
-.vr-prologue-image[hidden]{display:none}.vr-prologue::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(0deg,#030a15f5 0%,#071426dc 20%,#07142633 58%,#07142622 100%),linear-gradient(90deg,#06132166,transparent 75%)}
-.vr-prologue-copy{width:min(690px,82%);text-shadow:0 2px 12px #000b}.vr-prologue-place{font:700 .65rem ui-monospace,monospace;color:#a3e9ff;letter-spacing:.19em;margin:0 0 12px}
+.vr-prologue-image[hidden]{display:none}.vr-prologue::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(0deg,#030a15f5 0%,#071426dc 20%,#07142633 58%,#07142622 100%),linear-gradient(90deg,#06132166,transparent 75%)}.vr-prologue-place{font:700 .65rem ui-monospace,monospace;color:#a3e9ff;letter-spacing:.19em;margin:0 0 12px}
 .vr-prologue h2{color:#f2faff;font-size:clamp(2rem,5vw,4.7rem);line-height:1;letter-spacing:-.05em;margin:0 0 18px}.vr-prologue h2 span{color:#a3efff}
-#vr-prologue-story{color:#edf6ff;font-size:clamp(.92rem,1.35vw,1.13rem);line-height:1.65;margin:0 0 22px;max-width:650px}
-.vr-prologue-actions{display:flex;align-items:stretch;gap:12px;max-width:520px}.vr-prologue-help{color:#b9cddf;font-size:.67rem;line-height:1.5;margin:12px 0 0}
 .vr-prologue.is-still .vr-prologue-image{animation:none;transform:none}
 @keyframes vr-prologue-drift{from{transform:scale(1.035)}to{transform:scale(1)}}
-@media(max-width:700px){#verrian[data-state=intro] .vr-board{min-height:450px;aspect-ratio:auto}.vr-prologue{padding:26px 20px;min-height:450px}.vr-prologue-image{object-position:53% 40%}.vr-prologue::before{background:linear-gradient(0deg,#030a15fc 0%,#071426e8 37%,#07142640 76%,#07142633)}.vr-prologue-copy{width:100%}.vr-prologue h2{font-size:2.6rem}.vr-prologue-place{font-size:.55rem;letter-spacing:.12em}#vr-prologue-story{font-size:.9rem;line-height:1.6}.vr-prologue-actions{gap:8px;flex-wrap:wrap}.vr-prologue-actions .vr-launch,.vr-prologue-actions .vr-secondary{min-height:42px;font-size:.74rem!important}.vr-prologue-help{font-size:.6rem}}
+@media(max-width:700px){.vr-prologue{padding:26px 20px;min-height:450px}.vr-prologue-image{object-position:53% 40%}.vr-prologue::before{background:linear-gradient(0deg,#030a15fc 0%,#071426e8 37%,#07142640 76%,#07142633)}.vr-prologue h2{font-size:2.6rem}.vr-prologue-place{font-size:.55rem;letter-spacing:.12em}}
 @media(prefers-reduced-motion:reduce){.vr-prologue-image{animation:none;transform:none}}
 
-@media(max-height:540px){#verrian[data-state=intro] .vr-board{min-height:300px;max-height:none;aspect-ratio:auto}.vr-prologue{min-height:300px;padding:20px 28px}.vr-prologue-copy{width:min(850px,100%)}.vr-prologue h2{font-size:2.2rem;margin-bottom:10px}.vr-prologue-place{margin-bottom:8px}#vr-prologue-story{font-size:.88rem;line-height:1.5;margin-bottom:14px}.vr-prologue-help{display:none}}
+@media(max-height:540px){.vr-prologue{min-height:300px;padding:20px 28px}.vr-prologue h2{font-size:2.2rem;margin-bottom:10px}.vr-prologue-place{margin-bottom:8px}}
 
 /* Hidden suffix reserves the full story height while the arcade text appears. */
 .vr-prologue-unread{visibility:hidden}
+
+/* Welcome screen: school setting and cinematic atmosphere around the original game controls. */
+#verrian[data-state=idle] .vr-hud,#verrian[data-state=idle] .vr-objective,#verrian[data-state=idle] .vr-under,#verrian[data-state=idle] .vr-touch{display:none}
+#verrian[data-state=idle] .vr-overlay{display:block;padding:0;background:#07101d;backdrop-filter:none}
+.vr-welcome{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(180px,.65fr);align-items:end;gap:clamp(24px,4vw,60px);max-width:none;margin:0;min-height:100%;padding:clamp(28px,4vw,64px)}
+.vr-welcome .vr-cover-copy{display:flex;flex-direction:column;justify-content:space-between;align-self:stretch;gap:28px;order:1;max-width:630px;min-width:0;position:relative;z-index:1;text-shadow:0 2px 12px #000b}
+.vr-welcome .vr-cover-art{order:2;display:grid;justify-self:end;align-self:end;width:min(100%,320px);margin:0 12px 35px 0}
+.vr-welcome .vr-cover-art img{filter:drop-shadow(0 12px 28px #000b)}
+.vr-welcome .vr-prologue-place{display:block;color:#a3e9ff;font:700 .65rem ui-monospace,monospace;letter-spacing:.19em;line-height:1.4;margin:0 0 12px}
+.vr-welcome .vr-eyebrow{display:block;margin:0 0 12px;font-size:.6rem}
+.vr-welcome h2{font-size:clamp(2.1rem,3.7vw,3.9rem);line-height:1.05;margin:0 0 22px}
+.vr-welcome h2 em{text-shadow:none}
+.vr-welcome label{margin:20px 0 8px;font-weight:650;color:#e3f1ff}
+.vr-welcome select{background:#102438ed;box-shadow:0 5px 18px #0004}
+.vr-welcome .vr-launch-actions{margin-top:14px;gap:10px}
+.vr-welcome .vr-cover-note{display:block!important;color:#cedce7;font-size:.67rem!important;line-height:1.5;margin:14px 0 0}
+#verrian.vr-cabinet:fullscreen[data-state=idle] .vr-overlay{padding:0}
+#verrian.vr-cabinet:fullscreen .vr-welcome{padding-top:90px}
+@media(max-width:1000px){.vr-welcome{grid-template-columns:minmax(0,1.5fr) minmax(150px,.5fr);padding:30px;gap:24px}.vr-welcome .vr-cover-art{margin-right:0}.vr-welcome h2{font-size:2.5rem}}
+@media(max-width:700px){
+ #verrian[data-state=idle] .vr-board{min-height:550px;width:100%;height:auto;aspect-ratio:auto;max-height:none}
+ .vr-welcome{display:flex;align-items:flex-end;min-height:550px;padding:28px 22px}
+ .vr-welcome .vr-cover-copy{width:100%}
+ .vr-welcome .vr-cover-art{position:absolute;top:44%;right:24px;width:90px;margin:0;opacity:.95}
+ .vr-welcome .vr-cover-art>span{font-size:7px;padding:5px 8px;right:0}
+ .vr-welcome .vr-cover-art::before{box-shadow:0 0 0 12px #5dd9ff05,0 0 0 13px #5dd9ff1a}
+ .vr-welcome .vr-cover-copy .vr-prologue-place{display:block;font-size:.54rem;letter-spacing:.12em}
+ .vr-welcome .vr-cover-copy .vr-eyebrow{display:block;font-size:.5rem}
+ .vr-welcome h2{font-size:2.35rem;margin-bottom:18px}
+ .vr-welcome label{font-size:.74rem;margin:16px 0 8px}
+ .vr-welcome select{font-size:.74rem;padding:10px;min-height:42px}
+ .vr-welcome .vr-launch,.vr-welcome .vr-secondary{font-size:.72rem!important;min-height:44px;padding:10px}
+ .vr-welcome .vr-cover-note{font-size:.61rem!important}
+}
+@media(max-height:540px){
+ #verrian[data-state=idle] .vr-board{min-height:340px;height:auto;max-height:none;aspect-ratio:auto;width:100%}
+ .vr-welcome{display:grid;grid-template-columns:minmax(0,1fr) 150px;min-height:340px;padding:24px 30px;gap:30px}
+ .vr-welcome .vr-cover-art{position:relative;top:auto;right:auto;width:150px;margin:0 5px 15px}
+ .vr-welcome h2{font-size:2rem;margin-bottom:10px}
+ .vr-welcome .vr-prologue-place{margin-bottom:8px}
+ .vr-welcome label{margin:10px 0 7px}
+ .vr-welcome .vr-cover-note{margin-top:10px}
+}
+
+/* Narrative is part of the welcome screen; starting the game has no intermediate scene. */
+.vr-welcome-title #vr-welcome-story{font-size:clamp(.85rem,1.2vw,1.05rem);line-height:1.6;color:#edf6ff;margin:0;max-width:630px;text-shadow:0 2px 12px #000}
+@media(max-width:700px) and (min-height:541px){
+ #verrian[data-state=idle] .vr-board{min-height:690px}
+ #verrian[data-state=idle] .vr-overlay{position:relative}
+ .vr-welcome{display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:auto 80px auto;min-height:690px;align-items:start;gap:20px}
+ .vr-welcome .vr-cover-copy{display:contents}
+ .vr-welcome-title{grid-row:1}
+ .vr-welcome .vr-cover-art{grid-row:2;position:relative;top:auto;right:auto;justify-self:end;width:80px;align-self:center;margin:0 12px}
+ .vr-welcome-controls{grid-row:3;align-self:end}
+}
+@media(max-height:540px){
+ #verrian[data-state=idle] .vr-board{min-height:450px}
+ .vr-welcome{min-height:450px}
+ .vr-welcome-title #vr-welcome-story{font-size:.83rem;line-height:1.5}
+}
+
+@media(max-width:700px) and (min-height:541px){#verrian[data-state=idle] .vr-board canvas{position:absolute;inset:0}}
+
+/* Resume and touch controls keep the essential actions directly reachable. */
+.vr-resume-button{width:100%;margin:0 0 10px;border-color:#81cbb9;background:#183d42;color:#c9fff0}
+.vr-touch-main{display:flex;gap:6px}.vr-touch-actions[hidden],.vr-touch [data-context][hidden]{display:none}
+.vr-touch-tip{flex:1 0 100%;font-size:.65rem;line-height:1.4;color:#bbd5e8;margin:3px 0 0}
+#vr-touch-more{font-size:1.5rem;line-height:1;min-width:44px;min-height:48px}
+#vr-touch-more[aria-expanded=true]{border-color:#9ef4ff;background:#28475d}
+@media(pointer:coarse){
+ .vr-touch{display:grid;grid-template-columns:auto 1fr 44px;align-items:center;gap:8px;padding:10px}
+ .vr-touch-move{display:grid;grid-template-columns:repeat(3,48px);gap:4px}
+ .vr-touch-main{justify-content:end}
+ .vr-touch button{min-width:48px;min-height:52px;padding:8px;font-size:.78rem}
+ .vr-touch-main button{min-width:60px}.vr-touch-main .vr-attack{background:#38567f}
+ .vr-touch-actions{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding-top:8px;border-top:1px solid #52768f66}
+ .vr-touch-actions button{min-width:80px;min-height:46px}
+}
+@media(pointer:coarse) and (max-width:700px){
+ #verrian[data-state=playing] .vr-board,#verrian[data-state=paused] .vr-board,#verrian[data-state=done] .vr-board{width:100%;height:auto;min-height:0;max-height:none;aspect-ratio:var(--vr-view-ratio,16/9)}
+ .vr-toolbar{padding:8px 10px}.vr-brand{margin-bottom:6px}.vr-brand img{width:28px;height:28px}.vr-brand h1{font-size:.88rem}.vr-tools button{min-height:32px}
+ .vr-hud{grid-template-columns:repeat(4,minmax(0,1fr));gap:7px 8px;padding:10px}
+ .vr-hud span{font-size:6px;margin-bottom:3px}.vr-hud strong{font-size:1rem}
+ .vr-hud>div:nth-child(1){order:1}.vr-hud>div:nth-child(2){order:2}.vr-hud>div:nth-child(4){order:3}.vr-hud>div:nth-child(6){order:4}
+ .vr-hud>div:nth-child(3){order:5}.vr-hud>div:nth-child(5){order:6}.vr-hud>div:nth-child(7){order:7}
+ .vr-under{display:none}.vr-footer{padding:8px 10px;min-height:40px;font-size:.64rem}.vr-footer #vr-status{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+ .vr-touch{grid-template-columns:132px minmax(0,1fr) 44px;gap:4px;padding:8px 6px}
+ .vr-touch-move{grid-template-columns:repeat(3,44px);gap:0}
+ .vr-touch button{min-width:44px;min-height:48px;padding:5px;font-size:.68rem}
+ .vr-touch-main{gap:4px}.vr-touch-main button{min-width:48px;flex:1}
+ .vr-touch-actions button{min-width:74px}.vr-touch-actions{padding-top:7px;gap:7px}
+ .vr-objective{max-width:56%}.vr-objective>span{font-size:7px}.vr-objective strong{font-size:9px}.vr-objective small{font-size:8px}
+}
+@media(pointer:coarse) and (min-width:701px) and (max-height:540px){
+ #verrian:not(:fullscreen) .vr-toolbar{padding:6px 12px}
+ #verrian:not(:fullscreen) .vr-hud{padding:6px 12px;gap:8px}
+ #verrian:not(:fullscreen) .vr-hud span{font-size:7px;margin-bottom:3px}
+ #verrian:not(:fullscreen) .vr-hud strong{font-size:1rem}
+ #verrian:not(:fullscreen) .vr-under,#verrian:not(:fullscreen) .vr-footer{display:none}
+}
+#verrian.vr-cabinet:fullscreen .vr-touch{pointer-events:none}
+#verrian.vr-cabinet:fullscreen .vr-touch-actions{pointer-events:auto;background:#0c1a2deb;border-radius:12px;padding:9px}
+#verrian.vr-cabinet:fullscreen .vr-touch-actions[hidden]{display:none}
+
+/* In-game preferences and contextual help. */
+.vr-loading{display:grid;gap:6px;margin:12px 0;color:#bdefff;font-size:.7rem}
+.vr-loading progress{width:100%;height:5px;accent-color:#91eaff}.vr-loading[hidden]{display:none}
+.vr-route{position:relative;height:13px;margin:4px 7px 0;border-top:2px solid #507089}
+.vr-route i{position:absolute;top:-5px;width:7px;height:7px;transform:translateX(-50%);border:1px solid #e3b8ff;background:#302d4e;border-radius:2px}
+.vr-route i.is-active{background:#90ffcc;border-color:#b9ffdb}.vr-route b{position:absolute;top:-5px;left:0;width:7px;height:7px;background:#f5fcff;border-radius:50%;box-shadow:0 0 5px #aff6ff}
+#verrian[data-boss-status=vulnerable] .vr-objective{border-color:#ffe297;background:#302c18ed}
+#verrian[data-boss-status=attacking] .vr-objective{border-color:#ffb17f;background:#301e20ed}
+.vr-banner{white-space:pre-line;font-size:clamp(1rem,2.2vw,2rem);line-height:1.35}
+.vr-banner.is-visible{animation:vr-arrival .5s ease-out both}@keyframes vr-arrival{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.vr-coach{position:absolute;left:16px;bottom:14px;z-index:2;display:flex;gap:12px;max-width:min(400px,65%);padding:11px 14px;border:1px solid #6386a2;border-left:3px solid #a8efff;border-radius:10px;background:#0b1c30f0;color:#e8f6ff;box-shadow:0 8px 24px #0004}
+.vr-coach[hidden],#verrian[data-state=paused] .vr-coach,#verrian[data-state=done] .vr-coach{display:none}
+.vr-coach strong{font-size:.8rem}.vr-coach p{font-size:.73rem;line-height:1.5;margin:5px 0 0;color:#c4ddeb}.vr-coach button{align-self:start;background:transparent;color:#d8f4ff;border:0;min-width:28px;min-height:28px;font-size:1.2rem}
+.vr-settings-dialog{width:min(760px,calc(100% - 24px));max-height:88dvh;overflow:auto;border:1px solid #63839d;border-radius:18px;padding:24px;color:#e8f4ff;background:#101f32;box-shadow:0 24px 90px #000b}
+.vr-settings-dialog::backdrop{background:#020a14cc;backdrop-filter:blur(4px)}
+.vr-settings-dialog form{margin:0}.vr-settings-dialog header{display:flex;justify-content:space-between;align-items:start;gap:16px}.vr-settings-dialog h2{font-size:1.6rem;margin:5px 0}.vr-settings-dialog h3{font-size:1rem;margin:22px 0 8px}
+.vr-settings-note{font-size:.77rem;line-height:1.5;color:#b2cadc}.vr-settings-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:22px 0}
+.vr-settings-grid label{display:grid;gap:9px;font-size:.83rem}.vr-settings-grid .vr-check{display:flex;align-items:center;gap:9px}.vr-settings-grid .vr-check input{width:19px;height:19px;accent-color:#9deaff}
+.vr-settings-grid select{width:100%;min-height:42px;color:#e7f6ff;background:#182e45;border:1px solid #557895;border-radius:8px;padding:9px;font:inherit}.vr-settings-grid input[type=range]{width:100%;min-height:24px;accent-color:#9deaff}.vr-settings-grid output{font:700 .8rem ui-monospace,monospace;color:#bcefff}
+.vr-key-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.vr-key-grid button{text-align:left;min-height:42px;font-size:.76rem!important}.vr-settings-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}.vr-settings-actions button{font-size:.72rem!important}
+#vr-settings-feedback{min-height:1.5em;font-size:.77rem;color:#b7f4da}.vr-settings-dialog .vr-launch{width:100%}
+.vr-achievements{margin:24px 0;padding:24px 28px;background:var(--white);border:1px solid var(--line);border-radius:17px}.vr-achievements h2{margin:0 0 18px;font-size:1.25rem}
+#vr-achievements-list{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+#vr-achievements-list article{display:grid;grid-template-columns:28px 1fr;gap:6px 10px;padding:14px;border:1px solid #30465c;border-radius:12px;background:#122338;color:#91aabd}
+#vr-achievements-list article.is-earned{color:#dbf6ff;border-color:#6ba6a5;background:linear-gradient(135deg,#173b3d,#14273c)}
+#vr-achievements-list article>span{grid-row:1/3;font-size:1.6rem;color:#9bb8cc}#vr-achievements-list article.is-earned>span{color:#ffe29c}
+#vr-achievements-list strong{font-size:.78rem}#vr-achievements-list small{font-size:.69rem;line-height:1.5}
+.vr-shop-list button:focus-visible{outline:3px solid #e7fbff;outline-offset:-4px}.vr-shop-list button[aria-disabled=true]{opacity:.72}
+@media(max-width:700px){
+ .vr-coach{left:8px;bottom:8px;padding:8px 10px;max-width:82%;gap:5px}.vr-coach strong{font-size:.66rem}.vr-coach p{font-size:.61rem;margin-top:3px;line-height:1.35}
+ .vr-settings-dialog{padding:18px}.vr-settings-grid{gap:14px;grid-template-columns:1fr}.vr-settings-grid .vr-check{font-size:.8rem}.vr-key-grid{gap:6px}.vr-key-grid button{padding:8px;font-size:.7rem!important}
+ .vr-achievements{padding:20px}#vr-achievements-list{grid-template-columns:1fr 1fr;gap:8px}#vr-achievements-list article{grid-template-columns:20px 1fr;padding:10px;gap:4px 7px}
+}
+@media(pointer:coarse){#verrian.vr-cabinet:fullscreen .vr-coach{bottom:82px}}
+@media(prefers-reduced-motion:reduce){.vr-banner.is-visible{animation:none}}
+
+#verrian[data-effects=off] .vr-prologue-image{animation:none;transform:none}

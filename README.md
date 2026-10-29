@@ -1,6 +1,6 @@
 # Verrian — I guardiani del codice
 
-Avventura arcade 2D per il browser, nata nel laboratorio di informatica dell’I.I.S. Pietro Verri di Milano. Nell’anno 2148, Verrian, un cyborg custode del codice, cerca di salvare l’umanità dall’avvento scellerato dell’intelligenza artificiale. Attraversa quattro mondi digitali, a partire dalle rovine di Milano: riattiva i nodi, sconfigge i bug e affronta un boss alla fine di ogni mondo.
+Avventura arcade 2D per il browser, nata nel laboratorio di informatica dell’I.I.S.S. Pietro Verri di Milano. Nell’anno 2148, Verrian, un cyborg custode del codice, cerca di salvare l’umanità dall’avvento scellerato dell’intelligenza artificiale. Attraversa quattro mondi digitali, a partire dalle rovine di Milano: riattiva i nodi, sconfigge i bug e affronta un boss alla fine di ogni mondo.
 
 **Gioca:** https://verrian.verri.edu.it/
 
@@ -10,10 +10,13 @@ Avventura arcade 2D per il browser, nata nel laboratorio di informatica dell’I
 - Grafica con WebGL (PixiJS 8) quando c’è una GPU, altrimenti Canvas 2D; schermo intero anche in 21:9.
 - Combattimento con lama, armi a distanza, scatto, impulso, colpi da accovacciati e parate.
 - Officina fra un mondo e l’altro: armi, armature, vitalità e mezzi (aliante, jetpack, moto).
-- Prologo ambientato nel 2148 davanti all’I.I.S. Pietro Verri in rovina, con testo a scrittura progressiva (Esc per saltarlo).
+- Uno scenario diverso per ciascun mondo e sottofondo sonoro distinto (Web Audio).
+- Impostazioni di qualità grafica, volume, scuotimento, lampi e aiuti; tasti personalizzabili e controller standard.
+- Schermata iniziale ambientata nel 2148 davanti all’I.I.S.S. Pietro Verri in rovina, con racconto a scrittura progressiva.
+- Tutorial contestuale, mappa dei nodi e traguardi locali.
 - Cannone con mira diagonale: R o F insieme allo sparo; su touch i pulsanti Mira su e Mira giù.
 - Porte segrete, torri e percorsi in verticale.
-- Nessun account e nessun server: record e storico restano nel browser (`localStorage`).
+- Nessun account e nessun server: record, storico, preferenze e partita in corso (ripresa con Riprendi) restano nel browser (`localStorage`).
 
 ## Comandi
 
@@ -30,7 +33,7 @@ Avventura arcade 2D per il browser, nata nel laboratorio di informatica dell’I
 | R / F (con il cannone) | Mirare in diagonale in alto / in basso |
 | P / Esc | Pausa |
 
-Su telefono e tablet compaiono i pulsanti a schermo.
+I tasti si possono cambiare dalle impostazioni; è supportato anche un controller standard. Su telefono e tablet compaiono i pulsanti a schermo.
 
 ## Avvio in locale
 
@@ -53,6 +56,8 @@ npm test
 
 - `tests/core.test.cjs`: regole di gioco, limiti, determinismo e una partita completa vincente (`tests/fixtures/verrian-win.json`).
 - `tests/art.test.cjs`: pose, atlanti e ritagli delle immagini.
+- `tests/local.test.cjs`: salvataggi locali, record e ripresa della partita.
+- `tests/experience.test.cjs`: officina, controller, tasti personalizzati, tutorial e traguardi.
 
 `tools/verify-replay.cjs` riproduce una partita a partire da seme, difficoltà e comandi (JSON su stdin) e stampa il risultato: è lo strumento con cui un server può verificare un punteggio.
 
@@ -62,7 +67,11 @@ npm test
 index.html                 pagina del gioco (configurazione dei livelli inclusa)
 assets/verrian/core.js     motore di gioco puro, condiviso da browser e Node
 assets/verrian/game.js     interfaccia, comandi, salvataggi
-assets/verrian/prologue.js prologo prima della missione
+assets/verrian/prologue.js     racconto della schermata iniziale
+assets/verrian/experience.js   tutorial, traguardi e impostazioni
+assets/verrian/local-state.js  record, storico e partita da riprendere
+assets/verrian/audio.js        musica ed effetti sonori
+assets/verrian/graphics-loader.js  caricamento di immagini e PixiJS
 assets/verrian/render.js   renderer Canvas 2D
 assets/verrian/render-pixi.js  renderer WebGL (PixiJS)
 assets/verrian/art.js      pose e ritagli degli atlanti grafici
@@ -74,9 +83,9 @@ games/verrian/art-prompts.json  provenienza delle immagini
 
 ## Crediti
 
-- Gioco, codice e livelli: laboratorio di informatica dell’I.I.S. Pietro Verri, Milano.
+- Gioco, codice e livelli: laboratorio di informatica dell’I.I.S.S. Pietro Verri, Milano.
 - Immagini generate con strumenti di intelligenza artificiale a partire dal ritratto originale del personaggio; prompt e riferimenti sono in `games/verrian/art-prompts.json` e `assets/verrian/og-verrian-v1.json`.
-- Lo sfondo del prologo reinterpreta la sede dell’I.I.S. Pietro Verri di Milano; la fotografia usata come riferimento non è inclusa nel repository.
+- Lo sfondo della schermata iniziale reinterpreta la sede dell’I.I.S.S. Pietro Verri di Milano; la fotografia usata come riferimento non è inclusa nel repository.
 - Facciata del Duomo di riferimento: [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Milan-duomo-front-facade.jpg), CC0.
 - [PixiJS](https://pixijs.com/) 8.22.0, licenza MIT (`assets/vendor/pixi-8.22.0/LICENSE`).
 

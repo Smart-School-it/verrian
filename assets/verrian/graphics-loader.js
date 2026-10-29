@@ -1,0 +1,2 @@
+/* Vendor scripts stay inert until WebGL has actually been selected. */
+(()=>{'use strict';let task;function webgl(template){return task||=(async()=>{for(const source of template.content.querySelectorAll('script[src]'))await new Promise((resolve,reject)=>{const script=document.createElement('script');script.src=source.getAttribute('src');script.onload=resolve;script.onerror=()=>reject(Error('Caricamento WebGL non riuscito.'));document.head.append(script);});})();}window.VerrianGraphics={webgl};})();
