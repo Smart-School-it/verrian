@@ -6,9 +6,13 @@ Avventura arcade 2D per il browser, nata nel laboratorio di informatica dell’I
 
 **Gioca subito:** https://verrian.verri.edu.it/ (gratis, senza account)
 
-[![Trailer di Verrian (62 secondi): clicca per guardarlo](docs/screenshots/trailer.webp)](https://verrian.verri.edu.it/assets/verrian/video/verrian-trailer-v2.webm)
+## Trailer
 
-*Clicca sull’immagine per vedere il trailer (WebM, 62 s).*
+[![Trailer di Verrian: copertina, Duomo, primo boss, Stazione Centrale, Naviglio Grande, Castello Sforzesco e scontro finale](docs/trailer.gif)](https://verrian.verri.edu.it/assets/verrian/video/verrian-trailer-v3.webm)
+
+*Anteprima animata: clicca per guardare il trailer completo con musica ed effetti (63 s, WebM 1280×720). Il file è anche nel repository: [`docs/video/verrian-trailer.webm`](docs/video/verrian-trailer.webm).*
+
+Il trailer è girato con il gioco vero (renderer Canvas) mentre il motore esegue la partita vincente dei test: titoli e sottotitoli sono composti nel browser, l’audio è la musica e gli effetti del gioco.
 
 ## Immagini
 
@@ -110,6 +114,7 @@ assets/vendor/pixi-8.22.0  PixiJS (licenza MIT)
 games/verrian/levels.json  livelli (stessa configurazione di index.html)
 games/verrian/art-prompts.json  provenienza delle immagini
 docs/screenshots/          immagini di questo README
+docs/trailer.gif, docs/video/  anteprima animata e trailer
 ```
 
 ## Crediti

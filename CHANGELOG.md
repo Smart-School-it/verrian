@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-29 — Nuovo trailer
+
+- Trailer rigirato con la versione attuale del gioco (`assets/verrian/video/verrian-trailer-v3.webm`, 63 secondi, 1280×720, VP8 + Opus, copertina `verrian-trailer-v3-poster.png`): sfondi Milano 2148 (Duomo, Stazione Centrale, Naviglio Grande, Castello Sforzesco), nuovo tecnico, piattaforme illustrate e titoli con i luoghi. Il trailer v2 resta disponibile.
+
 ## 2026-10-29 — Smartwatch del tecnico
 
 - Aggiunto uno smartwatch al polso sinistro del tecnico in entrambe le pose; rimossi gli altri bracciali blu. Conservate le illustrazioni precedenti.
