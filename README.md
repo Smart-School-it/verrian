@@ -12,6 +12,8 @@ Avventura arcade 2D per il browser, nata nel laboratorio di informatica dell’I
 
 *Anteprima animata: clicca per guardare il trailer completo con musica ed effetti (63 s, WebM 1280×720). Il file è anche nel repository: [`docs/video/verrian-trailer.webm`](docs/video/verrian-trailer.webm).*
 
+**Spot per i social** (verticale 9:16, 33 s, per Instagram, TikTok e YouTube Shorts): [guardalo sul sito](https://verrian.verri.edu.it/assets/verrian/video/verrian-promo-v1.webm) o scarica [`docs/video/verrian-promo.webm`](docs/video/verrian-promo.webm). Pensato per studenti delle medie e delle superiori: «Hai 5 minuti tra una lezione e l’altra?», i luoghi di Milano 2148, i boss, il gioco dal telefono, la sfida del record di classe e il QR code finale.
+
 Il trailer è girato con il gioco vero (renderer Canvas) mentre il motore esegue la partita vincente dei test: titoli e sottotitoli sono composti nel browser, l’audio è la musica e gli effetti del gioco.
 
 ## Immagini
@@ -49,6 +51,7 @@ Inquadra il QR code per aprire il gioco su https://verrian.verri.edu.it. Locandi
 - Ambientazione «Milano 2148»: Duomo, Stazione Centrale, Naviglio Grande e Castello Sforzesco in rovina; dalle impostazioni si possono scegliere invece gli sfondi originali «Mondi digitali».
 - Piattaforme, punte, laser e barriere illustrati (`assets/verrian/terrain-art.js`), uguali nei due renderer.
 - Musica originale «Custodi del 2148», suonata in tempo reale con Web Audio, e effetti sonori; musica e suoni si accendono e spengono separatamente.
+- Scelta della modalità (Avventura o Arcade) con pulsanti in stile cabinato.
 - Impostazioni di ambientazione, qualità grafica, volume, scuotimento, lampi e aiuti; tasti personalizzabili e controller standard.
 - Schermata iniziale ambientata nel 2148 davanti all’I.I.S.S. Pietro Verri in rovina, con racconto a scrittura progressiva.
 - Tutorial contestuale, mappa dei nodi e traguardi locali.
@@ -120,7 +123,7 @@ assets/vendor/pixi-8.22.0  PixiJS (licenza MIT)
 games/verrian/levels.json  livelli (stessa configurazione di index.html)
 games/verrian/art-prompts.json  provenienza delle immagini
 docs/screenshots/          immagini di questo README
-docs/trailer.gif, docs/video/  anteprima animata e trailer
+docs/trailer.gif, docs/video/  anteprima animata, trailer e spot per i social
 assets/verrian/qr/         QR code verso il sito
 ```
 

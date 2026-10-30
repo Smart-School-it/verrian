@@ -315,3 +315,27 @@
 @media(prefers-reduced-motion:reduce){.vr-cabinet *{animation-duration:.01ms!important;animation-iteration-count:1!important}}
 @media(forced-colors:active){.vr-cabinet,.vr-tools button,.vr-shop-list button,.vr-objective,.vr-settings-dialog{border:1px solid CanvasText}.vr-tools button:focus-visible,.vr-shop-list button:focus-visible{outline:3px solid Highlight}}
 }
+
+/* Arcade-style mode picker */
+.vr-modes{margin:16px 0 0}
+.vr-modes-title{margin:0 0 9px!important;font:800 .66rem ui-monospace,"DejaVu Sans Mono",monospace!important;letter-spacing:.24em;text-transform:uppercase;color:#ffd36b!important;text-shadow:0 0 10px #ff9d2f80}
+.vr-modes-list{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.vr-mode{position:relative;display:grid;gap:5px;justify-items:start;align-content:center;text-align:left;padding:14px 12px 12px 34px;min-height:66px;background:#0a1525e6;border:2px solid #2d4763;border-radius:4px;color:#8fa9bf;font-family:ui-monospace,"DejaVu Sans Mono",monospace;cursor:pointer;box-shadow:4px 4px 0 #000b;transition:transform .08s,box-shadow .08s,border-color .15s}
+.vr-mode:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 #000b;border-color:#4d7aa0}
+.vr-mode:active{transform:translate(3px,3px);box-shadow:1px 1px 0 #000b}
+.vr-mode-name{font-weight:800;font-size:1.02rem;letter-spacing:.16em;text-transform:uppercase;color:#dcecf8}
+.vr-mode-info{font-size:.6rem;letter-spacing:.07em;text-transform:uppercase;line-height:1.35}
+.vr-mode-tag{position:absolute;top:-9px;right:10px;padding:2px 7px;border-radius:2px;background:#24384f;color:#bcd3e4;font:800 .52rem ui-monospace,"DejaVu Sans Mono",monospace;letter-spacing:.14em;text-transform:uppercase}
+.vr-mode-cursor{position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:.8rem;opacity:0}
+.vr-mode[aria-checked=true]{border-color:#5be3ff;background:linear-gradient(180deg,#103452f0,#0a1525f0);box-shadow:0 0 0 1px #5be3ff,0 0 22px #5be3ff55,4px 4px 0 #000b}
+.vr-mode[aria-checked=true] .vr-mode-name{color:#9ff5ff;text-shadow:0 0 12px #5be3ff}
+.vr-mode[aria-checked=true] .vr-mode-info{color:#cfefff}
+.vr-mode[aria-checked=true] .vr-mode-tag{background:#5be3ff;color:#06202e}
+.vr-mode[aria-checked=true] .vr-mode-cursor{opacity:1;color:#9ff5ff;animation:vr-mode-blink 1s steps(2,start) infinite}
+.vr-mode[data-mode=arcade][aria-checked=true]{border-color:#ff5fd2;background:linear-gradient(180deg,#3a1240f0,#0a1525f0);box-shadow:0 0 0 1px #ff5fd2,0 0 22px #ff2fd655,4px 4px 0 #000b}
+.vr-mode[data-mode=arcade][aria-checked=true] .vr-mode-name{color:#ffb3ee;text-shadow:0 0 12px #ff2fd6}
+.vr-mode[data-mode=arcade][aria-checked=true] .vr-mode-tag{background:#ff5fd2;color:#2a0626}
+.vr-mode[data-mode=arcade][aria-checked=true] .vr-mode-cursor{color:#ffb3ee}
+@keyframes vr-mode-blink{to{visibility:hidden}}
+@media(max-width:520px){.vr-modes-list{gap:10px}.vr-mode{padding:13px 8px 10px 26px;min-height:60px}.vr-mode-cursor{left:9px}.vr-mode-name{font-size:.86rem;letter-spacing:.12em}.vr-mode-info{font-size:.54rem}}
+@media(prefers-reduced-motion:reduce){.vr-mode,.vr-mode:hover,.vr-mode:active{transition:none;transform:none}.vr-mode[aria-checked=true] .vr-mode-cursor{animation:none}}

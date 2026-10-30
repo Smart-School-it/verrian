@@ -1,5 +1,19 @@
 # Changelog
 
+## 2026-10-30 — Scelta della modalità in stile arcade
+
+- Il menu a tendina della schermata iniziale è sostituito da due pulsanti in stile cabinato: **Avventura** («Consigliata», 8 integrità · 3 vite) e **Arcade** («Per esperti», nemici più resistenti · punti ×1,25). Bordi al neon (ciano per Avventura, magenta per Arcade), cursore ▶ lampeggiante, ombra squadrata e suono di selezione.
+- Gruppo di scelta accessibile (`role="radiogroup"`): frecce per cambiare, Tab per entrare e uscire. Scelta ricordata nel browser come prima; record personale aggiornato in base alla modalità. Con movimento ridotto il cursore non lampeggia.
+
+## 2026-10-30 — Ritorno al menu dopo una partita
+
+- Corretto il blocco della schermata iniziale dopo una partita o la demo: «Entra nel sistema» e «Guarda la demo» restavano disattivati con la barra «Preparazione del gioco…» ferma, perché il menu veniva ricostruito dalla versione salvata al caricamento della pagina. Ora pulsanti e barra di caricamento vengono aggiornati a ogni ritorno al menu (verificato con Canvas e WebGL, dopo la demo e dopo una partita abbandonata).
+
+## 2026-10-30 — Video promozionale per i social
+
+- Spot verticale di 33 secondi per studenti delle medie e delle superiori (`assets/verrian/video/verrian-promo-v1.webm`, 720×1280, VP8 + Opus, copertina `verrian-promo-v1-poster.png`), pensato per Instagram, TikTok e YouTube Shorts: domanda d’apertura («Hai 5 minuti tra una lezione e l’altra?»), Milano 2148, luoghi dei mondi, boss, gioco dal telefono (gratis, senza account, niente da scaricare), sfida del record di classe, laboratorio del Verri e QR code finale.
+- Riprese reali del gioco, musica ed effetti generati da `audio.js`. Script in `scripts/promo/`.
+
 ## 2026-10-30 — QR code
 
 - Locandina con QR code verso https://verrian.verri.edu.it (`assets/verrian/qr/verrian-qr.png`, 1080×1560, e `verrian-qr.svg`): moduli a pallini, ritratto di Verrian al centro, fumetto «Inquadrami!» e invito «Scansiona e gioca subito»; in basso solo «I.I.S.S. Pietro Verri · Milano». Correzione d’errore H; lettura verificata da 160 a 900 pixel di larghezza. Generatore in `scripts/qr-code.cjs`.
