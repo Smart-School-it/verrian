@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-30 — QR code
+
+- Locandina con QR code verso https://verrian.verri.edu.it (`assets/verrian/qr/verrian-qr.png`, 1080×1560, e `verrian-qr.svg`): moduli a pallini, ritratto di Verrian al centro, fumetto «Inquadrami!» e invito «Scansiona e gioca subito»; in basso solo «I.I.S.S. Pietro Verri · Milano». Correzione d’errore H; lettura verificata da 160 a 900 pixel di larghezza. Generatore in `scripts/qr-code.cjs`.
+
 ## 2026-10-29 — Nuovo trailer
 
 - Trailer rigirato con la versione attuale del gioco (`assets/verrian/video/verrian-trailer-v3.webm`, 63 secondi, 1280×720, VP8 + Opus, copertina `verrian-trailer-v3-poster.png`): sfondi Milano 2148 (Duomo, Stazione Centrale, Naviglio Grande, Castello Sforzesco), nuovo tecnico, piattaforme illustrate e titoli con i luoghi. Il trailer v2 resta disponibile.

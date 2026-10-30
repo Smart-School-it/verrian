@@ -34,6 +34,12 @@ Il trailer è girato con il gioco vero (renderer Canvas) mentre il motore esegue
 | <img src="docs/screenshots/smartphone-verticale.webp" width="260" alt="Su smartphone in verticale: la schermata iniziale con la scuola Pietro Verri nel 2148"> | ![Su smartphone in orizzontale: joystick e pulsanti trasparenti sopra il campo di gioco](docs/screenshots/smartphone.webp) |
 | **Smartphone in verticale** · schermata iniziale | **Smartphone in orizzontale** · schermo intero e gamepad virtuale semitrasparente |
 
+## QR code
+
+<img src="assets/verrian/qr/verrian-qr.png" width="320" alt="QR code di Verrian: inquadralo per aprire https://verrian.verri.edu.it">
+
+Inquadra il QR code per aprire il gioco su https://verrian.verri.edu.it. Locandina pronta da stampare o proiettare: [`assets/verrian/qr/verrian-qr.png`](assets/verrian/qr/verrian-qr.png) (1080×1560) e versione vettoriale [`verrian-qr.svg`](assets/verrian/qr/verrian-qr.svg). Correzione d’errore H, per questo il ritratto di Verrian al centro non impedisce la lettura; in stampa conviene un QR di almeno 3 cm di lato.
+
 ## Caratteristiche
 
 - Motore deterministico a 30 tick al secondo (`assets/verrian/core.js`): la stessa sequenza di comandi produce sempre la stessa partita, quindi ogni partita si può riprodurre e verificare.
@@ -115,6 +121,7 @@ games/verrian/levels.json  livelli (stessa configurazione di index.html)
 games/verrian/art-prompts.json  provenienza delle immagini
 docs/screenshots/          immagini di questo README
 docs/trailer.gif, docs/video/  anteprima animata e trailer
+assets/verrian/qr/         QR code verso il sito
 ```
 
 ## Crediti
