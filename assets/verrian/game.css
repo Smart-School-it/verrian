@@ -354,3 +354,12 @@
 #verrian .vr-welcome-controls .has-resume #vr-start{background:#1d1a0ce6;border-color:#ffd36b;color:#ffe7a8;text-shadow:0 0 10px #ffb83d;box-shadow:0 0 14px #ffb83d33,4px 4px 0 #000b}
 @media(max-width:520px){#verrian .vr-welcome-controls :is(#vr-start,#vr-demo,#vr-resume-local){font-size:.68rem!important;letter-spacing:.1em;padding:10px 12px;min-height:46px}}
 @media(prefers-reduced-motion:reduce){#verrian .vr-welcome-controls :is(#vr-start,#vr-demo,#vr-resume-local){transition:none}#verrian .vr-welcome-controls :is(#vr-start,#vr-demo,#vr-resume-local):is(:hover,:active){transform:none}#verrian .vr-welcome-controls #vr-resume-local::before{animation:none}}
+.vr-rumble-test{justify-self:start;margin-top:4px}
+/* Controller navigation: a strong, always visible focus ring while menus are driven by a pad. */
+html.vr-pad-nav :is(#verrian,.vr-settings-dialog) :is(button,select,input,a,[role=radio]):focus{outline:3px solid #ffd36b!important;outline-offset:3px!important;box-shadow:0 0 0 6px #ffb83d40,0 0 18px #ffb83d66!important}
+.vr-pad-hint{margin:14px 0 0!important;font:700 .66rem ui-monospace,"DejaVu Sans Mono",monospace!important;letter-spacing:.06em;color:#ffd36b!important}
+.vr-pad-help{grid-column:1/-1}
+/* Links to the level editor in the lobby and in the worlds list. */
+#verrian .vr-custom-links{margin:8px 0 0;font-size:.82rem}
+#verrian .vr-custom-links a,.vr-editor-promo a{color:#ffe45c;font-weight:700;text-decoration-thickness:1px;text-underline-offset:3px}
+.vr-editor-promo{margin:14px 0 0;font-size:.9rem;line-height:1.5;color:var(--muted,#9fb4c6)}

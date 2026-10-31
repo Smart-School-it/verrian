@@ -42,6 +42,19 @@ Il trailer è girato con il gioco vero (renderer Canvas) mentre il motore esegue
 
 Inquadra il QR code per aprire il gioco su https://verrian.verri.edu.it. Locandina pronta da stampare o proiettare: [`assets/verrian/qr/verrian-qr.png`](assets/verrian/qr/verrian-qr.png) (1080×1560) e versione vettoriale [`verrian-qr.svg`](assets/verrian/qr/verrian-qr.svg). Correzione d’errore H, per questo il ritratto di Verrian al centro non impedisce la lettura; in stampa conviene un QR di almeno 3 cm di lato.
 
+## Officina dei livelli
+
+Su **https://verrian.verri.edu.it/editor/** chiunque può disegnare un proprio mondo di Verrian, provarlo subito e condividerlo con un link.
+
+![Officina dei livelli: il remix del primo mondo con piattaforme, nodi, nemici e controlli](docs/screenshots/editor-livelli.webp)
+
+- Suolo, piattaforme fisse e mobili, nodi, otto tipi di nemici con pattuglia, frammenti, oggetti e mezzi, trappole, pedane, getti d’aria, laser a tempo, muri segreti, tecnici, casse, varco, boss e uscita.
+- Ambientazione a scelta fra i quattro mondi: sfondo, musica e boss seguono il tema. Remix dei mondi ufficiali.
+- Controlli in tempo reale: gli errori che renderebbero il livello ingiocabile bloccano la prova, gli avvisi indicano probabili sbagli.
+- **Prova il livello** e **Condividi**: il livello compresso sta nel link `/#livello=…` (frammento dell’URL, mai inviato al server). Chi lo apre gioca e può modificarne una copia.
+- I livelli restano nel browser (fino a 30) e si esportano come file `.verrian.json`. Le partite dei livelli condivisi non toccano i record ufficiali.
+- Formato, pulizia dei dati e controlli in `assets/verrian/level-format.js`; il motore non cambia.
+
 ## Caratteristiche
 
 - Motore deterministico a 30 tick al secondo (`assets/verrian/core.js`): la stessa sequenza di comandi produce sempre la stessa partita, quindi ogni partita si può riprodurre e verificare.
@@ -57,6 +70,8 @@ Inquadra il QR code per aprire il gioco su https://verrian.verri.edu.it. Locandi
 - Tutorial contestuale, mappa dei nodi e traguardi locali.
 - Cannone con mira diagonale: R o F insieme allo sparo; su touch i pulsanti Mira su e Mira giù.
 - Porte segrete, torri e percorsi in verticale.
+- Officina dei livelli (`editor/`): crea, prova e condividi i tuoi mondi con un link.
+- Controller: force feedback (Chromium), vibrazione disattivabile con Select o dalla barra, menu e impostazioni navigabili con croce, A, B, Y e Start.
 - Nessun account e nessun server: record, storico, preferenze e partita in corso (ripresa con Riprendi) restano nel browser (`localStorage`).
 
 ## Comandi
@@ -98,7 +113,8 @@ npm test
 - `tests/core.test.cjs`: regole di gioco, limiti, determinismo e una partita completa vincente (`tests/fixtures/verrian-win.json`).
 - `tests/art.test.cjs`: pose, atlanti e ritagli delle immagini.
 - `tests/local.test.cjs`: salvataggi locali, record e ripresa della partita.
-- `tests/experience.test.cjs`: officina, controller, tasti personalizzati, tutorial e traguardi.
+- `tests/experience.test.cjs`: officina, controller, vibrazione, tasti personalizzati, tutorial e traguardi.
+- `tests/levels.test.cjs`: livelli degli studenti, pulizia di dati ostili, codici di condivisione e vittoria in ciascun tema.
 
 `tools/verify-replay.cjs` riproduce una partita a partire da seme, difficoltà e comandi (JSON su stdin) e stampa il risultato: è lo strumento con cui un server può verificare un punteggio.
 
@@ -111,6 +127,9 @@ assets/verrian/game.js     interfaccia, comandi, salvataggi
 assets/verrian/prologue.js     racconto della schermata iniziale
 assets/verrian/experience.js   tutorial, traguardi e impostazioni
 assets/verrian/local-state.js  record, storico e partita da riprendere
+assets/verrian/toolbar-state.js  stato iniziale dei pulsanti audio ed effetti
+assets/verrian/level-format.js  formato, controlli e link dei livelli degli studenti
+editor/index.html, assets/verrian/editor.js|css  officina dei livelli
 assets/verrian/audio.js        musica ed effetti sonori
 assets/verrian/terrain-art.js  piattaforme e ostacoli illustrati
 assets/verrian/graphics-loader.js  caricamento di immagini e PixiJS

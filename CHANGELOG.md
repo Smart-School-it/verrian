@@ -1,5 +1,28 @@
 # Changelog
 
+## 2026-10-31 — Officina dei livelli: gli studenti creano e condividono i propri mondi
+
+- Nuovo editor visuale all'indirizzo `/editor/` (`editor/index.html`, `assets/verrian/editor.js`, `assets/verrian/editor.css`): suolo, piattaforme fisse e mobili, nodi, otto tipi di nemici con tratto di pattuglia, frammenti e oggetti, mezzi, trappole, pedane, getti d'aria, laser a tempo, muri segreti, tecnici e casse, varco, boss e uscita. Aggancio automatico alle piattaforme, griglia di 10 px, maniglie per ridimensionare, annulla/ripeti, scorciatoie da tastiera, minimappa, zoom anche con due dita.
+- Ambientazione a scelta fra i quattro mondi: sfondo, musica, aspetto e attacchi del boss seguono il tema. Titolo, storia, soprannome dell'autore, lunghezza, colore delle luci, nome ed energia del boss.
+- Controlli in tempo reale: gli errori che renderebbero il livello ingiocabile (niente suolo alla partenza, arena senza pavimento continuo, nessun nodo o nodi oltre il varco) bloccano la prova; gli avvisi segnalano nemici e nodi sospesi, buche troppo larghe, livelli senza frammenti. Un clic sull'avviso porta al punto del livello.
+- Fino a 30 livelli salvati nel browser, «Remix» dei quattro mondi ufficiali, esportazione e importazione di file `.verrian.json`.
+- **Prova** e **Condividi**: il livello viene compresso in un link `https://verrian.verri.edu.it/#livello=…` (circa 0,6–2 KB). Il codice resta nel frammento dell'URL e non raggiunge il server. Chi apre il link vede titolo, storia e autore, gioca il livello e può «modificarne una copia nell'officina».
+- Le partite dei livelli condivisi si svolgono nello slot del mondo scelto, senza officina finale, e non toccano record, storico, traguardi o bozza della partita ufficiale: tutto resta in memoria, tranne le preferenze. Il motore `core.js` non è cambiato, quindi le bozze esistenti restano riprendibili.
+- Modulo condiviso `assets/verrian/level-format.js` (`VerrianLevels`): pulizia dei dati non fidati (tipi ammessi, limiti numerici e di quantità, testi senza markup), controlli, codici di condivisione e archivio isolato. Test `scripts/test-verrian-levels.cjs` (118 controlli, inclusa una vittoria completa in ciascuno dei quattro temi), eseguito da `check-project.py`. `update-site.py` versiona anche le risorse dell'editor.
+- Collegamenti all'officina nella schermata iniziale e nell'elenco dei mondi.
+
+## 2026-10-31 — Menu con il controller, vibrazione al volo e pulsanti audio senza sfarfallio
+
+- Menu guidati dal controller: Start mette in pausa, Y apre le impostazioni (nel menu iniziale e in pausa), croce o levetta scelgono, sinistra/destra cambiano modalità, elenchi e cursori, A conferma o attiva le caselle, B chiude le impostazioni e poi riprende la partita. Il menu di pausa ha anche il pulsante «Impostazioni» e un promemoria dei tasti quando è collegato un controller; l'elemento selezionato ha un contorno giallo ben visibile.
+- Vibrazione disattivabile mentre si gioca: pulsante «Vibrazione: on/off» nella barra, visibile solo con un controller collegato, e tasto Select / View / Share del controller. Breve vibrazione di conferma alla riattivazione; avviso quando il controller viene collegato.
+- I pulsanti «Musica», «Suoni» ed «Effetti» mostrano subito lo stato salvato al caricamento della pagina (`assets/verrian/toolbar-state.js`, eseguito subito dopo la barra), senza comparire per un attimo su «off».
+
+## 2026-10-31 — Vibrazione dei controller (force feedback)
+
+- I controller con due motori (Xbox, PlayStation, Switch Pro e compatibili) vibrano durante la partita: danni e perdita di una vita, esplosioni (molto più forti per i boss), colpi pesanti, martello, impulso, terremoti, urti contro i muri e con i mezzi, parate, boss storditi o infuriati, armi e mezzi conquistati, nodi, tecnici e segreti.
+- Profili di intensità e durata in `VerrianExperience.RUMBLE`; un effetto più debole non interrompe uno più forte. Niente vibrazione in pausa, nei menu e nella demo; si ferma quando si mette in pausa.
+- Impostazioni: «Vibrazione del controller (force feedback)», attiva di base, e «Prova la vibrazione» con messaggio se il controller o il browser non la supportano. Funziona nei browser Chromium (Chrome, Edge, Opera); Firefox non la gestisce ancora.
+
 ## 2026-10-31 — Pulsanti di avvio in stile arcade
 
 - Nella schermata iniziale anche «Entra nel sistema» / «Nuova partita», «Riprendi la partita» e «Guarda la demo» hanno lo stile da cabinato dei pulsanti di modalità: maiuscole monospazio, angoli squadrati, ombra a blocchi, pressione visibile e bagliore al neon.

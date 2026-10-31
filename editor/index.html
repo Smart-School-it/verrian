@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Officina dei livelli · Verrian</title>
+<meta name="description" content="Crea il tuo mondo di Verrian: piattaforme, nodi, nemici e boss. Provalo subito e condividilo con un link, senza account.">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#091322">
+<link rel="canonical" href="https://verrian.verri.edu.it/editor/">
+<link rel="icon" href="../assets/verrian/verrian-portrait.png">
+<link rel="stylesheet" href="../assets/verrian/editor.css?v=f01d2ef17ede">
+</head>
+<body class="ve">
+<header class="ve-top">
+ <a class="ve-brand" href="../" title="Torna al gioco"><img src="../assets/verrian/verrian-portrait.png" alt="" width="40" height="40"><div><strong>VERRIAN</strong><span>Officina dei livelli</span></div></a>
+ <div class="ve-actions">
+  <button type="button" class="ve-btn" id="ve-library-open">I miei livelli</button>
+  <button type="button" class="ve-btn" id="ve-import">Importa</button>
+  <button type="button" class="ve-btn" id="ve-export">Esporta file</button>
+  <button type="button" class="ve-btn" id="ve-share-open">Condividi</button>
+  <button type="button" class="ve-btn ve-play" id="ve-test">▶ Prova il livello</button>
+ </div>
+</header>
+<main class="ve-main">
+ <nav class="ve-tools" aria-label="Strumenti">
+  <div id="ve-tools" class="ve-tool-list" role="toolbar" aria-label="Strumenti di disegno"></div>
+  <div id="ve-variant" class="ve-variant" hidden><label><span id="ve-variant-label">Tipo</span><select id="ve-variant-select"></select></label><select id="ve-vehicle-select" aria-label="Mezzo" hidden></select></div>
+  <p id="ve-tool-help" class="ve-help"></p>
+ </nav>
+ <section class="ve-stage" aria-label="Livello">
+  <div class="ve-canvas-wrap"><canvas id="ve-canvas" aria-label="Disegno del livello: usa gli strumenti a sinistra; le proprietà dell’elemento selezionato sono nel pannello a destra."></canvas></div>
+  <div class="ve-bar">
+   <div class="ve-row"><button type="button" class="ve-btn ve-icon" id="ve-undo" title="Annulla (Ctrl+Z)" aria-label="Annulla">↶</button><button type="button" class="ve-btn ve-icon" id="ve-redo" title="Ripeti (Ctrl+Shift+Z)" aria-label="Ripeti">↷</button></div>
+   <div class="ve-row"><button type="button" class="ve-btn ve-icon" id="ve-zoom-out" aria-label="Riduci">−</button><output id="ve-zoom-value">50%</output><button type="button" class="ve-btn ve-icon" id="ve-zoom-in" aria-label="Ingrandisci">+</button><button type="button" class="ve-btn" id="ve-zoom-fit">Adatta</button></div>
+   <label class="ve-check"><input type="checkbox" id="ve-snap" checked> Griglia 10 px</label>
+   <span id="ve-coords" class="ve-coords">x 0 · y 0</span>
+  </div>
+  <canvas id="ve-map" class="ve-map" aria-label="Mappa del livello: fai clic per spostare la visuale"></canvas>
+  <p id="ve-status" class="ve-status" role="status" aria-live="polite"></p>
+ </section>
+ <aside class="ve-side">
+  <section class="ve-panel" id="ve-check" aria-labelledby="ve-check-title"><h2 id="ve-check-title">Controlli</h2><p id="ve-check-summary" class="ve-summary"></p><ul id="ve-check-list" class="ve-check-list"></ul><p id="ve-counts" class="ve-note"></p></section>
+  <section class="ve-panel" aria-labelledby="ve-props-title"><h2 id="ve-props-title">Elemento selezionato</h2><div id="ve-props" class="ve-form"></div></section>
+  <section class="ve-panel" aria-labelledby="ve-level-title"><h2 id="ve-level-title">Il livello</h2><div class="ve-form">
+   <label>Titolo<input id="ve-title" maxlength="60"></label>
+   <label>Storia<textarea id="ve-story" maxlength="160" rows="2"></textarea></label>
+   <label>Soprannome dell’autore<input id="ve-author" maxlength="30" autocomplete="off" placeholder="es. Guardiana42"></label>
+   <p class="ve-note">Usa un soprannome, non nome e cognome: compare a chi riceve il link.</p>
+   <label>Ambientazione<select id="ve-theme"></select></label>
+   <p class="ve-note" id="ve-theme-note"></p>
+   <label>Lunghezza del livello<input id="ve-width" type="number" min="1600" max="8000" step="100"></label>
+   <label>Colore delle luci<input id="ve-color" type="color"></label>
+  </div></section>
+  <details class="ve-panel ve-guide"><summary>Come funziona un livello</summary>
+   <p>Verrian parte a sinistra. Per aprire il <strong>varco del boss</strong> deve attivare <strong>tutti i nodi</strong>, che sono anche checkpoint. Dopo il varco c’è l’arena: sconfitto il boss, si attraversa l’<strong>uscita</strong> e il livello è vinto.</p>
+   <p>Il suolo è all’altezza 520: le buche fanno perdere una vita. Con il doppio salto Verrian sale di circa 190 px e supera buche larghe fino a circa 250 px. Prova spesso il livello per verificarlo.</p>
+   <p>Tasti: V seleziona, G suolo, P piattaforma, N nodo, E nemico, O oggetto. Ctrl+Z annulla, Canc elimina, frecce per spostare, + e − per lo zoom, Shift durante il trascinamento per staccare dalla piattaforma.</p>
+  </details>
+  <p class="ve-note" id="ve-saved">I livelli restano in questo browser.</p>
+ </aside>
+</main>
+<input type="file" id="ve-file" accept=".json,application/json" hidden>
+<dialog id="ve-library" class="ve-dialog" aria-labelledby="ve-library-title"><form method="dialog"><header><h2 id="ve-library-title">I miei livelli</h2><button class="ve-btn ve-icon" value="close" aria-label="Chiudi">×</button></header>
+ <ul id="ve-library-list" class="ve-library"></ul>
+ <h3>Nuovo livello</h3>
+ <div class="ve-row ve-wrap"><button type="button" class="ve-btn" id="ve-new-blank">Livello vuoto</button><button type="button" class="ve-btn" data-template="0">Remix: Frontiera al neon</button><button type="button" class="ve-btn" data-template="1">Remix: Forgia della memoria</button><button type="button" class="ve-btn" data-template="2">Remix: Abisso dei glitch</button><button type="button" class="ve-btn" data-template="3">Remix: Cittadella del kernel</button></div>
+ <p class="ve-note">Fino a 30 livelli in questo browser. Per conservarli altrove usa Esporta file.</p>
+</form></dialog>
+<dialog id="ve-share" class="ve-dialog" aria-labelledby="ve-share-title"><form method="dialog"><header><h2 id="ve-share-title">Condividi il livello</h2><button class="ve-btn ve-icon" value="close" aria-label="Chiudi">×</button></header>
+ <label>Link da mandare ai compagni o al docente<textarea id="ve-share-link" rows="4" readonly></textarea></label>
+ <div class="ve-row"><button type="button" class="ve-btn ve-play" id="ve-copy-link">Copia il link</button><button class="ve-btn" value="close">Chiudi</button></div>
+ <p class="ve-note" id="ve-share-size"></p>
+ <p class="ve-note">Chi apre il link gioca il tuo livello e può farne una copia nell’officina. Le partite dei livelli condivisi non entrano nei record ufficiali.</p>
+</form></dialog>
+<script src="../assets/verrian/level-format.js?v=028e897a3be6"></script>
+<script src="../assets/verrian/editor.js?v=feafe86835b3"></script>
+</body>
+</html>

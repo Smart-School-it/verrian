@@ -1,0 +1,89 @@
+/* Level editor page (editor/): same palette as the game cabinet, arcade accents on the main actions. */
+:root{--ink:#e3eef7;--muted:#9fb4c6;--line:#2b4158;--panel:#0f1c2c;--soft:#15263a;--accent:#8ff3ff;--yellow:#ffe45c;--red:#ff6b8a;--green:#7dffb0;--paper:#07101d;color-scheme:dark;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--ink);background:var(--paper)}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{height:100%}
+body.ve{margin:0;display:flex;flex-direction:column;background:radial-gradient(70% 40% at 10% 0,#17354775,transparent 70%),var(--paper)}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+kbd{font:600 .7rem ui-monospace,monospace;padding:1px 5px;border:1px solid var(--line);border-bottom-width:2px;border-radius:5px;background:var(--soft);color:var(--muted)}
+.ve-top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:10px 16px;border-bottom:1px solid var(--line);background:#091322e6}
+.ve-brand{display:flex;align-items:center;gap:10px;color:var(--ink);text-decoration:none}
+.ve-brand img{border-radius:10px;border:1px solid var(--line)}
+.ve-brand strong{display:block;font-size:1.05rem;letter-spacing:3px}
+.ve-brand span{font-size:.75rem;color:var(--accent);letter-spacing:1.4px;text-transform:uppercase}
+.ve-actions,.ve-row{display:flex;gap:8px;align-items:center}
+.ve-actions{flex-wrap:wrap}
+.ve-wrap{flex-wrap:wrap}
+.ve-btn{border:1px solid var(--line);background:var(--soft);border-radius:10px;padding:8px 12px;cursor:pointer;font-weight:600;font-size:.875rem;min-height:38px}
+.ve-btn:hover{border-color:var(--accent)}
+.ve-icon{min-width:38px;padding:6px 8px;font-size:1.05rem}
+.ve-play{background:var(--yellow);color:#151100;border-color:#fff3a3;box-shadow:0 3px 0 #a38a00;text-transform:uppercase;letter-spacing:1px}
+.ve-play:hover{border-color:#fff;filter:brightness(1.05)}
+.ve-play:active{transform:translateY(2px);box-shadow:0 1px 0 #a38a00}
+.ve-danger{color:#ffc2cf;border-color:#6b2a3b}
+.ve-main{flex:1;min-height:0;display:grid;grid-template-columns:200px minmax(0,1fr) 300px;gap:12px;padding:12px 16px}
+.ve-tools,.ve-side{overflow:auto;min-height:0}
+.ve-tool-list{display:grid;gap:4px}
+.ve-tool{display:grid;grid-template-columns:22px 1fr auto;align-items:center;gap:8px;text-align:left;padding:7px 9px;border-radius:10px;border:1px solid transparent;background:transparent;cursor:pointer;font-size:.875rem}
+.ve-tool:hover{background:var(--soft)}
+.ve-tool[aria-pressed="true"]{background:#1b3a4d;border-color:var(--accent);box-shadow:inset 3px 0 0 var(--yellow)}
+.ve-tool i{width:18px;height:14px;border-radius:3px;background:var(--accent)}
+.ve-tool-select i{background:none;border:2px dashed var(--yellow)}
+.ve-tool-ground i{background:#0d1a2b;border-top:4px solid var(--accent);height:16px}
+.ve-tool-relays i{border-radius:50%;width:14px;margin-left:2px;box-shadow:0 0 8px var(--accent)}
+.ve-tool-enemies i{background:#ff6b8a;border-radius:6px}
+.ve-tool-pickups i{background:#7ff6ff;transform:rotate(45deg) scale(.7)}
+.ve-tool-traps i{background:linear-gradient(135deg,transparent 50%,#ff3b5c 50%) 0 0/9px 14px}
+.ve-tool-pads i{background:#ff5fc8;height:6px}
+.ve-tool-vents i{background:#7dffb0;clip-path:polygon(50% 0,100% 60%,0 60%)}
+.ve-tool-movers i{background:#2a5677;border-top:3px solid var(--accent);height:8px}
+.ve-tool-lasers i{background:repeating-linear-gradient(90deg,#ff9d5c 0 3px,transparent 3px 6px)}
+.ve-tool-secrets i{background:#4b2f6b;border:1px solid #c58cff}
+.ve-tool-encounters i{background:#1f5a8a;border:1px solid var(--accent);border-radius:8px}
+.ve-tool-erase i{background:#ffc2cf;border-radius:4px 4px 8px 8px}
+.ve-variant{margin:10px 0;display:grid;gap:6px}
+.ve-variant label,.ve-form label{display:grid;gap:4px;font-size:.78rem;color:var(--muted)}
+select,input:not([type=checkbox]),textarea{width:100%;background:#0a1626;border:1px solid #3d5871;border-radius:8px;padding:7px 9px;font-size:.875rem;color:var(--ink)}
+input[type=color]{padding:2px;height:36px}
+textarea{resize:vertical}
+.ve-help{font-size:.78rem;color:var(--muted);line-height:1.45;margin:10px 2px}
+.ve-stage{display:grid;grid-template-rows:minmax(260px,1fr) auto 56px auto;gap:8px;min-height:0;min-width:0}
+.ve-canvas-wrap{position:relative;min-height:0;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#050b16}
+#ve-canvas{position:absolute;inset:0;touch-action:none;display:block}
+.ve-bar{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;justify-content:space-between}
+.ve-bar output{min-width:44px;text-align:center;font-variant-numeric:tabular-nums;font-size:.85rem}
+.ve-check{display:flex;gap:6px;align-items:center;font-size:.85rem}
+.ve-coords{font:500 .78rem ui-monospace,monospace;color:var(--muted);min-width:120px;text-align:right}
+.ve-map{width:100%;height:56px;border:1px solid var(--line);border-radius:10px;cursor:pointer;touch-action:none}
+.ve-status{margin:0;min-height:1.3em;font-size:.85rem;color:var(--accent)}
+.ve-panel{border:1px solid var(--line);border-radius:14px;background:var(--panel);padding:12px 14px;margin-bottom:10px}
+.ve-panel h2,.ve-guide summary{margin:0 0 8px;font-size:.72rem;letter-spacing:1.5px;text-transform:uppercase;color:#8fd8ea;font-weight:750}
+.ve-guide summary{cursor:pointer;margin:0}
+.ve-guide p{font-size:.8rem;line-height:1.5;color:var(--muted)}
+.ve-panel h3{margin:0 0 8px;font-size:.95rem}
+.ve-form{display:grid;gap:8px}
+.ve-empty,.ve-note{font-size:.78rem;color:var(--muted);margin:0;line-height:1.45}
+.ve-summary{margin:0 0 6px;font-weight:700;font-size:.9rem}
+.ve-summary[data-state=ok]{color:var(--green)}
+.ve-summary[data-state=warn]{color:var(--yellow)}
+.ve-summary[data-state=error]{color:var(--red)}
+.ve-check-list{list-style:none;margin:0 0 8px;padding:0;display:grid;gap:4px;max-height:180px;overflow:auto}
+.ve-check-list button{width:100%;text-align:left;background:none;border:0;border-left:3px solid;padding:4px 8px;font-size:.78rem;line-height:1.35;cursor:pointer;border-radius:0 6px 6px 0}
+.ve-check-list button:hover{background:var(--soft)}
+.ve-error button{border-color:var(--red);color:#ffd2db}
+.ve-warn button{border-color:var(--yellow);color:#fff3bf}
+.ve-dialog{max-width:min(620px,calc(100vw - 32px));width:100%;border:1px solid var(--line);border-radius:16px;background:var(--panel);color:var(--ink);padding:18px}
+.ve-dialog::backdrop{background:#02060ccc}
+.ve-dialog header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.ve-dialog h2{margin:0;font-size:1.1rem}
+.ve-dialog h3{font-size:.9rem;margin:16px 0 8px}
+.ve-dialog form>label{display:grid;gap:6px;font-size:.85rem;color:var(--muted);margin-bottom:10px}
+.ve-dialog textarea{font:.75rem ui-monospace,monospace;word-break:break-all}
+.ve-dialog .ve-note{margin-top:10px}
+.ve-library{list-style:none;padding:0;margin:0;display:grid;gap:6px;max-height:300px;overflow:auto}
+.ve-library li{display:grid;grid-template-columns:1fr auto auto;gap:8px;align-items:center;padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:var(--soft);font-size:.875rem}
+.ve-library li:only-child:not(:has(button)){display:block;color:var(--muted)}
+.ve-library small{display:block;color:var(--muted);font-size:.75rem;margin-top:2px}
+@media(max-width:1100px){body.ve{height:auto;min-height:100%}.ve-main{flex:none;grid-template-columns:170px minmax(0,1fr)}.ve-stage{grid-template-rows:68vh auto 56px auto}.ve-side{grid-column:1/-1;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px;align-items:start}.ve-panel{margin:0}}
+@media(max-width:700px){.ve-top{padding:8px 16px}.ve-actions{width:100%}.ve-actions .ve-btn{flex:1 1 auto;padding:7px 8px;font-size:.8rem}.ve-main{display:flex;flex-direction:column;padding:10px 16px}.ve-stage{grid-template-rows:60vh auto 48px auto}.ve-map{height:48px}.ve-tool-list{display:flex;overflow-x:auto;gap:4px;padding-bottom:4px}.ve-tool{grid-template-columns:18px auto;white-space:nowrap}.ve-tool kbd{display:none}.ve-tools{order:-1}.ve-side{display:block}.ve-panel{margin-bottom:10px}.ve-coords{display:none}}
