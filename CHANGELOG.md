@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-10-31 — Pulsanti di avvio in stile arcade
+
+- Nella schermata iniziale anche «Entra nel sistema» / «Nuova partita», «Riprendi la partita» e «Guarda la demo» hanno lo stile da cabinato dei pulsanti di modalità: maiuscole monospazio, angoli squadrati, ombra a blocchi, pressione visibile e bagliore al neon.
+- Colori per funzione: giallo «insert coin» per entrare nel sistema, verde con cursore ▶ lampeggiante per riprendere (con la ripresa disponibile «Nuova partita» diventa contornata in giallo), blu con spia rossa per la demo. Su telefono «Guarda la demo» va a capo a tutta larghezza; con movimento ridotto niente lampeggio né spostamenti.
+
 ## 2026-10-30 — Scelta della modalità in stile arcade
 
 - Il menu a tendina della schermata iniziale è sostituito da due pulsanti in stile cabinato: **Avventura** («Consigliata», 8 integrità · 3 vite) e **Arcade** («Per esperti», nemici più resistenti · punti ×1,25). Bordi al neon (ciano per Avventura, magenta per Arcade), cursore ▶ lampeggiante, ombra squadrata e suono di selezione.

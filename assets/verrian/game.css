@@ -339,3 +339,18 @@
 @keyframes vr-mode-blink{to{visibility:hidden}}
 @media(max-width:520px){.vr-modes-list{gap:10px}.vr-mode{padding:13px 8px 10px 26px;min-height:60px}.vr-mode-cursor{left:9px}.vr-mode-name{font-size:.86rem;letter-spacing:.12em}.vr-mode-info{font-size:.54rem}}
 @media(prefers-reduced-motion:reduce){.vr-mode,.vr-mode:hover,.vr-mode:active{transition:none;transform:none}.vr-mode[aria-checked=true] .vr-mode-cursor{animation:none}}
+
+/* Arcade-style launch buttons on the start screen, matching the mode picker. */
+#verrian .vr-welcome-controls :is(#vr-start,#vr-demo,#vr-resume-local){position:relative;display:flex;align-items:center;justify-content:center;gap:10px;min-height:50px;padding:12px 16px;border:2px solid;border-radius:4px;font:800 .78rem ui-monospace,"DejaVu Sans Mono",monospace!important;letter-spacing:.14em;text-transform:uppercase;box-shadow:4px 4px 0 #000b;transition:transform .08s,box-shadow .08s,filter .15s}
+#verrian .vr-welcome-controls :is(#vr-start,#vr-demo,#vr-resume-local):hover:not(:disabled){transform:translate(-1px,-1px);box-shadow:5px 5px 0 #000b;filter:brightness(1.12)}
+#verrian .vr-welcome-controls :is(#vr-start,#vr-demo,#vr-resume-local):active:not(:disabled){transform:translate(3px,3px);box-shadow:1px 1px 0 #000b}
+#verrian .vr-welcome-controls :is(#vr-start,#vr-demo,#vr-resume-local):disabled{filter:grayscale(.7) brightness(.75);cursor:wait}
+#verrian .vr-welcome-controls #vr-start{background:linear-gradient(180deg,#ffe28a,#ffb83d);border-color:#fff1b8;color:#2a1600;box-shadow:0 0 0 1px #ffb83d,0 0 22px #ffb83d55,4px 4px 0 #000b;text-shadow:0 1px #fff6}
+#verrian .vr-welcome-controls #vr-start>span{float:none;margin-left:auto;font-size:1.05em}
+#verrian .vr-welcome-controls #vr-resume-local{background:linear-gradient(180deg,#0f3b34f2,#0a1d21f2);border-color:#5dffc0;color:#b8ffe4;box-shadow:0 0 0 1px #5dffc0,0 0 22px #2fffb055,4px 4px 0 #000b;text-shadow:0 0 10px #2fffb0}
+#verrian .vr-welcome-controls #vr-resume-local::before{content:"▶";font-size:.85em;animation:vr-mode-blink 1s steps(2,start) infinite}
+#verrian .vr-welcome-controls #vr-demo{background:#0a1525e6;border-color:#4d7aa0;color:#cfe7f5}
+#verrian .vr-welcome-controls #vr-demo::before{content:"◉";color:#ff6b8a;font-size:.8em;text-shadow:0 0 8px #ff2f55}
+#verrian .vr-welcome-controls .has-resume #vr-start{background:#1d1a0ce6;border-color:#ffd36b;color:#ffe7a8;text-shadow:0 0 10px #ffb83d;box-shadow:0 0 14px #ffb83d33,4px 4px 0 #000b}
+@media(max-width:520px){#verrian .vr-welcome-controls :is(#vr-start,#vr-demo,#vr-resume-local){font-size:.68rem!important;letter-spacing:.1em;padding:10px 12px;min-height:46px}}
+@media(prefers-reduced-motion:reduce){#verrian .vr-welcome-controls :is(#vr-start,#vr-demo,#vr-resume-local){transition:none}#verrian .vr-welcome-controls :is(#vr-start,#vr-demo,#vr-resume-local):is(:hover,:active){transform:none}#verrian .vr-welcome-controls #vr-resume-local::before{animation:none}}
