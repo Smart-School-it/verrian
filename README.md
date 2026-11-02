@@ -12,7 +12,7 @@ Avventura arcade 2D per il browser, nata nel laboratorio di informatica dell’I
 
 *Anteprima animata: clicca per guardare il trailer completo con musica ed effetti (63 s, WebM 1280×720). Il file è anche nel repository: [`docs/video/verrian-trailer.webm`](docs/video/verrian-trailer.webm).*
 
-**Spot per i social** (verticale 9:16, 33 s, per Instagram, TikTok e YouTube Shorts): [guardalo sul sito](https://verrian.verri.edu.it/assets/verrian/video/verrian-promo-v1.webm) o scarica [`docs/video/verrian-promo.webm`](docs/video/verrian-promo.webm). Pensato per studenti delle medie e delle superiori: «Hai 5 minuti tra una lezione e l’altra?», i luoghi di Milano 2148, i boss, il gioco dal telefono, la sfida del record di classe e il QR code finale.
+**Spot per i social** (verticale 9:16, 37 s, per Instagram, TikTok e YouTube Shorts): [guardalo sul sito](https://verrian.verri.edu.it/assets/verrian/video/verrian-promo-v2.webm) o scarica [`docs/video/verrian-promo.webm`](docs/video/verrian-promo.webm). Pensato per studenti delle medie e delle superiori, invita a giocare dopo la scuola: «Ultima campanella? A casa ti aspetta una missione», i luoghi di Milano 2148, i boss, il gioco dal PC di casa o del laboratorio (tastiera o controller), l’officina dei livelli, la sfida del record di classe e il QR code finale con «A scuola il telefono resta spento».
 
 Il trailer è girato con il gioco vero (renderer Canvas) mentre il motore esegue la partita vincente dei test: titoli e sottotitoli sono composti nel browser, l’audio è la musica e gli effetti del gioco.
 

@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-11-02 — Nuovo spot per gli studenti: si gioca dopo la scuola
+
+- Spot verticale di 37 secondi `assets/verrian/video/verrian-promo-v2.webm` (720×1280, VP8 + Opus, copertina `verrian-promo-v2-poster.png`), al posto della versione 1 che invitava a giocare dal telefono «tra una lezione e l’altra», cosa non consentita a scuola.
+- Nuovo messaggio: «Ultima campanella? A casa ti aspetta una missione», «Gioca dal PC, a casa o in laboratorio» (portatile e controller al posto dello smartphone), nuova scena sull’officina dei livelli, sfida del record con «Il verdetto domani, in classe», chiusura «Stasera, a casa» con «A scuola il telefono resta spento».
+- Sorgenti aggiornati in `scripts/promo/` (testi che si riducono da soli per non uscire dall’inquadratura). La versione 1 resta nella cartella dei video solo come archivio.
+
 ## 2026-10-31 — Officina dei livelli: gli studenti creano e condividono i propri mondi
 
 - Nuovo editor visuale all'indirizzo `/editor/` (`editor/index.html`, `assets/verrian/editor.js`, `assets/verrian/editor.css`): suolo, piattaforme fisse e mobili, nodi, otto tipi di nemici con tratto di pattuglia, frammenti e oggetti, mezzi, trappole, pedane, getti d'aria, laser a tempo, muri segreti, tecnici e casse, varco, boss e uscita. Aggancio automatico alle piattaforme, griglia di 10 px, maniglie per ridimensionare, annulla/ripeti, scorciatoie da tastiera, minimappa, zoom anche con due dita.
