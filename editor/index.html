@@ -9,12 +9,14 @@
 <meta name="theme-color" content="#091322">
 <link rel="canonical" href="https://verrian.verri.edu.it/editor/">
 <link rel="icon" href="../assets/verrian/verrian-portrait.png">
-<link rel="stylesheet" href="../assets/verrian/editor.css?v=f01d2ef17ede">
+<link rel="stylesheet" href="../assets/verrian/editor.css?v=852e039d0b3f">
 </head>
 <body class="ve">
 <header class="ve-top">
  <a class="ve-brand" href="../" title="Torna al gioco"><img src="../assets/verrian/verrian-portrait.png" alt="" width="40" height="40"><div><strong>VERRIAN</strong><span>Officina dei livelli</span></div></a>
  <div class="ve-actions">
+  <span class="ve-user" id="ve-user" hidden><span class="ve-user-dot" aria-hidden="true"></span><span id="ve-user-name"></span><button type="button" class="ve-link" id="ve-logout">Esci</button></span>
+  <button type="button" class="ve-btn" id="ve-registry-open" hidden>Registro</button>
   <button type="button" class="ve-btn" id="ve-library-open">I miei livelli</button>
   <button type="button" class="ve-btn" id="ve-import">Importa</button>
   <button type="button" class="ve-btn" id="ve-export">Esporta file</button>
@@ -47,7 +49,7 @@
    <label>Storia<textarea id="ve-story" maxlength="160" rows="2"></textarea></label>
    <label>Soprannome dell’autore<input id="ve-author" maxlength="30" autocomplete="off" placeholder="es. Guardiana42"></label>
    <p class="ve-note">Usa un soprannome, non nome e cognome: compare a chi riceve il link.</p>
-   <label>Ambientazione<select id="ve-theme"></select></label>
+   <label>Ambientazione<select id="ve-theme"></select></label><label>Sfondo<select id="ve-backdrop"></select></label>
    <p class="ve-note" id="ve-theme-note"></p>
    <label>Lunghezza del livello<input id="ve-width" type="number" min="1600" max="8000" step="100"></label>
    <label>Colore delle luci<input id="ve-color" type="color"></label>
@@ -57,7 +59,7 @@
    <p>Il suolo è all’altezza 520: le buche fanno perdere una vita. Con il doppio salto Verrian sale di circa 190 px e supera buche larghe fino a circa 250 px. Prova spesso il livello per verificarlo.</p>
    <p>Tasti: V seleziona, G suolo, P piattaforma, N nodo, E nemico, O oggetto. Ctrl+Z annulla, Canc elimina, frecce per spostare, + e − per lo zoom, Shift durante il trascinamento per staccare dalla piattaforma.</p>
   </details>
-  <p class="ve-note" id="ve-saved">I livelli restano in questo browser.</p>
+  <p class="ve-note" id="ve-saved">I livelli si salvano nel tuo account scolastico.</p>
  </aside>
 </main>
 <input type="file" id="ve-file" accept=".json,application/json" hidden>
@@ -65,15 +67,18 @@
  <ul id="ve-library-list" class="ve-library"></ul>
  <h3>Nuovo livello</h3>
  <div class="ve-row ve-wrap"><button type="button" class="ve-btn" id="ve-new-blank">Livello vuoto</button><button type="button" class="ve-btn" data-template="0">Remix: Frontiera al neon</button><button type="button" class="ve-btn" data-template="1">Remix: Forgia della memoria</button><button type="button" class="ve-btn" data-template="2">Remix: Abisso dei glitch</button><button type="button" class="ve-btn" data-template="3">Remix: Cittadella del kernel</button></div>
- <p class="ve-note">Fino a 30 livelli in questo browser. Per conservarli altrove usa Esporta file.</p>
+ <div class="ve-legacy" id="ve-legacy" hidden><p><strong id="ve-legacy-count"></strong> prima dell’accesso sono salvati solo in questo browser.</p><button type="button" class="ve-btn ve-play" id="ve-legacy-import">Importali nel mio account</button></div>
+ <p class="ve-note">Fino a 60 livelli nel tuo account. Eliminare un livello disattiva il suo link; il registro conserva comunque chi l’ha creato.</p>
 </form></dialog>
 <dialog id="ve-share" class="ve-dialog" aria-labelledby="ve-share-title"><form method="dialog"><header><h2 id="ve-share-title">Condividi il livello</h2><button class="ve-btn ve-icon" value="close" aria-label="Chiudi">×</button></header>
  <label>Link da mandare ai compagni o al docente<textarea id="ve-share-link" rows="4" readonly></textarea></label>
  <div class="ve-row"><button type="button" class="ve-btn ve-play" id="ve-copy-link">Copia il link</button><button class="ve-btn" value="close">Chiudi</button></div>
  <p class="ve-note" id="ve-share-size"></p>
- <p class="ve-note">Chi apre il link gioca il tuo livello e può farne una copia nell’officina. Le partite dei livelli condivisi non entrano nei record ufficiali.</p>
+ <p class="ve-note">Chi apre il link gioca il tuo livello; chi ha un account scolastico può farne una copia nell’officina. Le partite dei livelli condivisi non entrano nei record ufficiali.</p>
 </form></dialog>
-<script src="../assets/verrian/level-format.js?v=028e897a3be6"></script>
-<script src="../assets/verrian/editor.js?v=feafe86835b3"></script>
+<div class="ve-gate" id="ve-gate" hidden role="dialog" aria-modal="true" aria-labelledby="ve-gate-title"><div class="ve-gate-box"><img src="../assets/verrian/verrian-portrait.png" alt="" width="72" height="72"><p class="ve-gate-eyebrow">OFFICINA DEI LIVELLI</p><h1 id="ve-gate-title">Accedi per creare i tuoi mondi</h1><p id="ve-gate-text"></p><p class="ve-gate-error" id="ve-gate-error" role="alert" hidden></p><a class="ve-btn ve-play ve-gate-login" id="ve-gate-login" href="/api/login.php">Accedi con Google</a><p class="ve-note">Nome ed e-mail verificati da Google restano visibili solo ai docenti. Giocare i livelli condivisi non richiede l’accesso.</p><a class="ve-link" href="../">← Torna al gioco</a></div></div>
+<dialog id="ve-registry" class="ve-dialog ve-dialog-wide" aria-labelledby="ve-registry-title"><form method="dialog"><header><h2 id="ve-registry-title">Registro dei livelli</h2><button class="ve-btn ve-icon" value="close" aria-label="Chiudi">×</button></header><p class="ve-note">Tutti i livelli con l’autore verificato da Google, anche quelli eliminati. Riservato ai docenti indicati nella configurazione.</p><ul id="ve-registry-list" class="ve-library ve-registry"></ul></form></dialog>
+<script src="../assets/verrian/level-format.js?v=3473bad56ea5"></script>
+<script src="../assets/verrian/editor.js?v=548f77f9625e"></script>
 </body>
 </html>

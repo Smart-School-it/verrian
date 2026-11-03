@@ -5,6 +5,8 @@
 const THEMES=[{id:'neon-frontier',name:'Milano · Frontiera al neon',color:'#71e9ff',secondary:'#4576ed',boss:'N.U.L.L. · Il predatore del bus',attack:'carica a testa bassa'},{id:'memory-forge',name:'Forgia della memoria',color:'#ffbb78',secondary:'#ba4c81',boss:'SEGFAULT · Il divoratore di memoria',attack:'sfere dall’alto e colpi mirati'},{id:'glitch-depths',name:'Abisso dei glitch',color:'#bc9aff',secondary:'#4267e5',boss:'DEADLOCK · Il guardiano dei cicli',attack:'ventaglio di tre colpi'},{id:'kernel-citadel',name:'Cittadella del kernel',color:'#79f4c3',secondary:'#3589cc',boss:'KERNEL PANIC · La corruzione finale',attack:'raggi dal suolo e colpi mirati'}];
 const ENEMIES={crawler:'Strisciante',drone:'Drone',sentinel:'Sentinella con scudo',phase:'Spettro di fase',leaper:'Saltatore',mite:'Acaro',turret:'Torretta',wraith:'Fantasma volante'},FLYING=new Set(['drone','wraith']);
 const PICKUPS={shard:'Frammento',health:'Integrità +3',energy:'Impulso',overdrive:'Overdrive',credits:'Crediti',vehicle:'Mezzo'},VEHICLES={glider:'Ali di plasma',jetpack:'Zaino a reazione',bike:'Moto a levitazione'};
+// Backdrops a level may pick instead of its theme's own; new paintings are added here and in VerrianArt.BACKDROPS.
+const BACKDROPS={'milano-duomo-v1':'Milano · Duomo','milano-centrale-v1':'Milano · Stazione Centrale','milano-navigli-v1':'Milano · Naviglio Grande','milano-castello-v1':'Milano · Castello Sforzesco','scuola-pietro-verri-2148-v1':'Milano · Scuola Pietro Verri','forge-memory-v1':'Digitale · Forgia della memoria','glitch-abyss-v1':'Digitale · Abisso dei glitch','kernel-citadel-v1':'Digitale · Cittadella del kernel','digital-city':'Digitale · Città dei dati'};
 const GROUND=520,FORMAT='verrian-level',VERSION=1,PREFIX='1.',LIMITS={platforms:200,relays:8,enemies:80,traps:60,pickups:300,movers:30,vents:20,lasers:20,secrets:10,encounters:20,pads:20};
 const has=(o,k)=>typeof k==='string'&&Object.hasOwn(o,k),int=(v,a,b,d)=>{const n=Math.round(Number(v));return Number.isFinite(n)?Math.max(a,Math.min(b,n)):d;};
 // Text ends up in banners and screen-reader messages: plain characters only, no markup or control codes.
@@ -13,7 +15,7 @@ const color=(v,d)=>/^#[0-9a-f]{6}$/i.test(String(v))?String(v).toLowerCase():d;
 const list=(v,max,map)=>(Array.isArray(v)?v:[]).slice(0,max).map(map).filter(Boolean);
 function clean(input){
  const src=input&&typeof input==='object'?input:{},raw=src.format===FORMAT?src.level||{}:src,theme=int(src.theme??THEMES.findIndex(t=>t.id===raw.id),0,3,0),t=THEMES[theme],width=int(raw.width,1600,8000,4200),X=v=>int(v,0,width,0),Y=v=>int(v,-1600,GROUND+100,GROUND);
- const level={id:t.id,title:str(raw.title,60,'Il mio livello'),story:str(raw.story,160,'Un mondo costruito da un guardiano del laboratorio.'),color:color(raw.color,t.color),secondary:color(raw.secondary,t.secondary),width,
+ const level={id:t.id,title:str(raw.title,60,'Il mio livello'),story:str(raw.story,160,'Un mondo costruito da un guardiano del laboratorio.'),backdrop:has(BACKDROPS,raw.backdrop)?raw.backdrop:'',color:color(raw.color,t.color),secondary:color(raw.secondary,t.secondary),width,
   platforms:list(raw.platforms,LIMITS.platforms,q=>Array.isArray(q)&&[int(q[0],-200,width,0),Y(q[1]),int(q[2],20,width+200,100),int(q[3],10,400,20)]),
   relays:list(raw.relays,LIMITS.relays,q=>q&&{x:X(q.x),y:Y(q.y)}),
   enemies:list(raw.enemies,LIMITS.enemies,q=>{if(!q||!has(ENEMIES,q.type))return null;const x=X(q.x),fixed=q.type==='turret',min=fixed?x:Math.min(x,X(q.min??x-100)),max=fixed?x:Math.max(x,X(q.max??x+100));return {type:q.type,x,y:Y(q.y),min,max};}),
@@ -58,8 +60,13 @@ async function decode(code){
  let json;try{json=new TextDecoder().decode(await pipe(unb64(text.slice(PREFIX.length)),new DecompressionStream('deflate-raw')));}catch{throw Error('Codice del livello incompleto o danneggiato.');}
  if(json.length>400000)throw Error('Livello troppo grande.');return clean(JSON.parse(json));
 }
-async function fromHash(hash){const m=/[#&]livello=([^&]+)/.exec(hash||'');return m?decode(decodeURIComponent(m[1])):null;}
+// Shared links carry the id of a level registered by a signed-in @verri.edu.it account; the old self-contained codes are no longer playable.
+const ID=/^[A-Za-z0-9]{10}$/;
+async function fetchLevel(id,base=''){if(!ID.test(id))throw Error('Link del livello non valido.');let r;try{r=await fetch(base+'/api/levels.php?id='+id,{credentials:'same-origin',cache:'no-store'});}catch{throw Error('Impossibile scaricare il livello: controlla la connessione.');}
+ const data=await r.json().catch(()=>null);if(!r.ok||!data?.ok)throw Error(data?.error||'Livello non disponibile.');return {...clean(data.pack),id};}
+async function fromHash(hash,base=''){const m=/[#&]livello=([^&]+)/.exec(hash||'');if(!m)return null;const v=decodeURIComponent(m[1]);
+ if(v.startsWith(PREFIX))throw Error('Questo link appartiene a una versione precedente dell’officina: ora ogni livello va pubblicato dall’officina con l’account scolastico. Chiedi all’autore il nuovo link.');return fetchLevel(v,base);}
 // Custom runs keep the player's preferences but play and save everything else in memory, away from the official records.
 function sandboxStorage(real,shared){const mem=new Map();return {getItem:k=>k===shared?real.getItem(k):mem.has(k)?mem.get(k):null,setItem:(k,v)=>k===shared?real.setItem(k,v):mem.set(k,String(v)),removeItem:k=>k===shared?real.removeItem(k):mem.delete(k)};}
-return {THEMES,ENEMIES,FLYING,PICKUPS,VEHICLES,GROUND,FORMAT,LIMITS,clean,check,blank,encode,decode,fromHash,sandboxStorage};
+return {THEMES,BACKDROPS,ENEMIES,FLYING,PICKUPS,VEHICLES,GROUND,FORMAT,LIMITS,clean,check,blank,encode,decode,fromHash,fetchLevel,sandboxStorage};
 });

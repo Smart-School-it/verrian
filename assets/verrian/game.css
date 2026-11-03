@@ -363,3 +363,21 @@ html.vr-pad-nav :is(#verrian,.vr-settings-dialog) :is(button,select,input,a,[rol
 #verrian .vr-custom-links{margin:8px 0 0;font-size:.82rem}
 #verrian .vr-custom-links a,.vr-editor-promo a{color:#ffe45c;font-weight:700;text-decoration-thickness:1px;text-underline-offset:3px}
 .vr-editor-promo{margin:14px 0 0;font-size:.9rem;line-height:1.5;color:var(--muted,#9fb4c6)}
+
+/* Bottega dei Big Bros: scena a quattro fotogrammi (big-bros-shop-v2) alta quanto la bottega, a sinistra di titolo, oggetti e pulsanti. */
+.vr-shop{grid-template-columns:minmax(220px,30%) minmax(0,1fr)}
+.vr-shop>:not(.vr-shop-scene){grid-column:2}
+.vr-shop-scene{grid-column:1;grid-row:1/-1;position:relative;margin:0;min-height:0;display:flex;flex-direction:column;justify-content:flex-end;border-radius:10px;overflow:hidden;background:#10233a;border:1px solid #2a4566}
+.vr-shop-scene-art{display:block;width:100%;max-height:100%;aspect-ratio:502/783;margin:0 auto;background:url(big-bros-shop-v2.webp) 0 100%/400% 100% no-repeat;animation:vr-shop-scene 2.8s steps(1) infinite}
+.vr-shop-scene::before{content:"";flex:1}
+@keyframes vr-shop-scene{0%{background-position-x:0}25%{background-position-x:33.333%}50%{background-position-x:66.667%}75%{background-position-x:100%}}
+.vr-shop-say{position:absolute;top:10px;left:10px;right:10px;margin:0;padding:8px 11px;border-radius:10px;background:#e2f3ff;color:#0b1a2b;font:700 .78rem/1.4 ui-monospace,monospace;z-index:1;box-shadow:0 4px 12px #0007}
+.vr-shop-say::after{content:"";position:absolute;right:22%;bottom:-8px;border:8px solid transparent;border-top-color:#e2f3ff;border-bottom:0}
+@media(max-width:700px),(max-height:520px){.vr-shop{grid-template-columns:minmax(0,1fr);grid-template-rows:auto auto 1fr auto}.vr-shop>:not(.vr-shop-scene){grid-column:1}.vr-shop-scene{grid-row:auto;flex-direction:row;align-items:center;gap:8px;padding:6px;border-radius:8px}.vr-shop-scene::before{display:none}.vr-shop-scene-art{width:auto;height:96px;max-height:none;flex:none;order:-1;aspect-ratio:502/436;background-size:400% auto;background-position-y:100%}.vr-shop-say{position:static;font-size:.68rem;padding:6px 8px}.vr-shop-say::after{right:auto;left:-7px;top:50%;bottom:auto;margin-top:-6px;border:6px solid transparent;border-right-color:#e2f3ff;border-left:0}}
+@media(prefers-reduced-motion:reduce){.vr-shop-scene-art{animation:none}}
+.vr-shop-scene-v3 .vr-shop-scene-art{background-image:url(big-bros-shop-v3.webp)}
+.vr-shop-scene-v4 .vr-shop-scene-art{background-image:url(big-bros-shop-v4.webp)}
+/* Il fumetto sta sopra l'illustrazione, senza coprirne l'insegna; l'illustrazione riempie lo spazio che resta. */
+@media(min-width:701px) and (min-height:521px){.vr-shop-scene{justify-content:flex-start;gap:10px;padding:8px}.vr-shop-scene::before{display:none}.vr-shop-say{position:relative;top:auto;left:auto;right:auto}.vr-shop-scene-art{flex:1 1 0;min-height:0;width:auto;max-width:100%;align-self:center;border-radius:6px}}
+/* Su schermi stretti le scene 3 e 4 inquadrano la parte centrale, con i fratelli e il gatto. */
+@media(max-width:700px),(max-height:520px){.vr-shop-scene-v3 .vr-shop-scene-art,.vr-shop-scene-v4 .vr-shop-scene-art{aspect-ratio:502/470;background-position-y:52%}}

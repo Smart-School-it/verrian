@@ -14,6 +14,8 @@ Avventura arcade 2D per il browser, nata nel laboratorio di informatica dell’I
 
 **Spot per i social** (verticale 9:16, 37 s, per Instagram, TikTok e YouTube Shorts): [guardalo sul sito](https://verrian.verri.edu.it/assets/verrian/video/verrian-promo-v2.webm) o scarica [`docs/video/verrian-promo.webm`](docs/video/verrian-promo.webm). Pensato per studenti delle medie e delle superiori, invita a giocare dopo la scuola: «Ultima campanella? A casa ti aspetta una missione», i luoghi di Milano 2148, i boss, il gioco dal PC di casa o del laboratorio (tastiera o controller), l’officina dei livelli, la sfida del record di classe e il QR code finale con «A scuola il telefono resta spento».
 
+Copertine per YouTube: [`docs/youtube/verrian-youtube-trailer.jpg`](docs/youtube/verrian-youtube-trailer.jpg) (1280×720) e [`docs/youtube/verrian-youtube-promo.jpg`](docs/youtube/verrian-youtube-promo.jpg) (verticale 1080×1920, per lo spot).
+
 Il trailer è girato con il gioco vero (renderer Canvas) mentre il motore esegue la partita vincente dei test: titoli e sottotitoli sono composti nel browser, l’audio è la musica e gli effetti del gioco.
 
 ## Immagini
@@ -44,23 +46,29 @@ Inquadra il QR code per aprire il gioco su https://verrian.verri.edu.it. Locandi
 
 ## Officina dei livelli
 
-Su **https://verrian.verri.edu.it/editor/** chiunque può disegnare un proprio mondo di Verrian, provarlo subito e condividerlo con un link.
+Su **https://verrian.verri.edu.it/editor/** studenti e docenti dell’I.I.S.S. Pietro Verri disegnano un proprio mondo di Verrian, lo provano subito e lo condividono con un link.
 
 ![Officina dei livelli: il remix del primo mondo con piattaforme, nodi, nemici e controlli](docs/screenshots/editor-livelli.webp)
 
 - Suolo, piattaforme fisse e mobili, nodi, otto tipi di nemici con pattuglia, frammenti, oggetti e mezzi, trappole, pedane, getti d’aria, laser a tempo, muri segreti, tecnici, casse, varco, boss e uscita.
-- Ambientazione a scelta fra i quattro mondi: sfondo, musica e boss seguono il tema. Remix dei mondi ufficiali.
+- Ambientazione a scelta fra i quattro mondi (nemici, boss, musica e colori) e **sfondo** scelto a parte fra nove: Duomo, Stazione Centrale, Naviglio Grande, Castello Sforzesco, Scuola Pietro Verri e quattro sfondi digitali. Remix dei mondi ufficiali.
 - Controlli in tempo reale: gli errori che renderebbero il livello ingiocabile bloccano la prova, gli avvisi indicano probabili sbagli.
-- **Prova il livello** e **Condividi**: il livello compresso sta nel link `/#livello=…` (frammento dell’URL, mai inviato al server). Chi lo apre gioca e può modificarne una copia.
-- I livelli restano nel browser (fino a 30) e si esportano come file `.verrian.json`. Le partite dei livelli condivisi non toccano i record ufficiali.
-- Formato, pulizia dei dati e controlli in `assets/verrian/level-format.js`; il motore non cambia.
+- **Accesso con Google, solo account @verri.edu.it**, così si sa chi ha creato ogni livello. I livelli si salvano da soli nell’account (fino a 60 per persona); nel gioco compare soltanto il soprannome dell’autore. I docenti indicati nella configurazione consultano il registro di tutti i livelli con l’autore verificato.
+- **Prova il livello** e **Condividi**: il link `/#livello=<codice>` si gioca senza accesso; chi lo apre può modificarne una copia nel proprio account. Le partite dei livelli condivisi non toccano i record ufficiali.
+- Formato, pulizia dei dati e controlli in `assets/verrian/level-format.js`, usato sia dal browser sia dal server; il motore non cambia.
+
+## La bottega dei Big Bros
+
+Fra un mondo e l’altro pozioni e potenziamenti li vendono i **Big Bros**, due fratelli, con il loro gatto persiano rosso cyborg. Tre illustrazioni animate a quattro fotogrammi si alternano a ogni bottega (`assets/verrian/big-bros-shop-v2|v3|v4.webp`), con un fumetto che cambia a ogni acquisto.
+
+![La bottega dei Big Bros: i due fratelli e il gatto cyborg accanto agli oggetti in vendita](docs/screenshots/bottega-big-bros.webp)
 
 ## Caratteristiche
 
 - Motore deterministico a 30 tick al secondo (`assets/verrian/core.js`): la stessa sequenza di comandi produce sempre la stessa partita, quindi ogni partita si può riprodurre e verificare.
 - Grafica con WebGL (PixiJS 8) quando c’è una GPU, altrimenti Canvas 2D; schermo intero anche in 21:9.
 - Combattimento con lama, armi a distanza, scatto, impulso, colpi da accovacciati e parate.
-- Officina fra un mondo e l’altro: armi, armature, vitalità e mezzi (aliante, jetpack, moto).
+- Bottega dei Big Bros fra un mondo e l’altro: armi, armature, vitalità e mezzi (aliante, jetpack, moto).
 - Ambientazione «Milano 2148»: Duomo, Stazione Centrale, Naviglio Grande e Castello Sforzesco in rovina; dalle impostazioni si possono scegliere invece gli sfondi originali «Mondi digitali».
 - Piattaforme, punte, laser e barriere illustrati (`assets/verrian/terrain-art.js`), uguali nei due renderer.
 - Musica originale «Custodi del 2148», suonata in tempo reale con Web Audio, e effetti sonori; musica e suoni si accendono e spengono separatamente.
@@ -70,9 +78,9 @@ Su **https://verrian.verri.edu.it/editor/** chiunque può disegnare un proprio m
 - Tutorial contestuale, mappa dei nodi e traguardi locali.
 - Cannone con mira diagonale: R o F insieme allo sparo; su touch i pulsanti Mira su e Mira giù.
 - Porte segrete, torri e percorsi in verticale.
-- Officina dei livelli (`editor/`): crea, prova e condividi i tuoi mondi con un link.
+- Officina dei livelli (`editor/`): crea, prova e condividi i tuoi mondi con un link, con l’account scolastico.
 - Controller: force feedback (Chromium), vibrazione disattivabile con Select o dalla barra, menu e impostazioni navigabili con croce, A, B, Y e Start.
-- Nessun account e nessun server: record, storico, preferenze e partita in corso (ripresa con Riprendi) restano nel browser (`localStorage`).
+- Per giocare non serve un account: record, storico, preferenze e partita in corso (ripresa con Riprendi) restano nel browser (`localStorage`). Solo l’officina dei livelli usa un piccolo backend PHP (`api/`, `server/`).
 
 ## Comandi
 
@@ -102,6 +110,8 @@ python3 -m http.server 8000
 
 Parametri utili: `?renderer=canvas` o `?renderer=pixi` per forzare il motore grafico, `?fps=1` per vedere i fotogrammi al secondo.
 
+Il gioco funziona con qualsiasi server statico; l’officina dei livelli richiede PHP 8.1+ con `curl` e `openssl`, Node.js per convalidare i livelli lato server e un client OAuth Google di tipo «Applicazione web». La configurazione privata è un file PHP fuori dalla cartella pubblica (percorso in `VERRIAN_CONFIG`, campi in `server/config.php`): `client_id`, `client_secret`, `domain`, `origin`, `admins` e `data_dir`. Non va mai pubblicata nel repository. In produzione PHP è attivo solo in `api/`; `server/` non deve essere raggiungibile dal web.
+
 ## Test
 
 Richiedono Node.js 18 o successivo, senza dipendenze.
@@ -114,7 +124,8 @@ npm test
 - `tests/art.test.cjs`: pose, atlanti e ritagli delle immagini.
 - `tests/local.test.cjs`: salvataggi locali, record e ripresa della partita.
 - `tests/experience.test.cjs`: officina, controller, vibrazione, tasti personalizzati, tutorial e traguardi.
-- `tests/levels.test.cjs`: livelli degli studenti, pulizia di dati ostili, codici di condivisione e vittoria in ciascun tema.
+- `tests/levels.test.cjs`: livelli degli studenti, pulizia di dati ostili, sfondi ammessi, link e vittoria in ciascun tema.
+- `tests/server.test.php` (`npm run test:server`, richiede PHP): archivio dei livelli, proprietà, copie, eliminazione, registro, ritorno sicuro dopo l’accesso e verifica dei token di Google.
 
 `tools/verify-replay.cjs` riproduce una partita a partire da seme, difficoltà e comandi (JSON su stdin) e stampa il risultato: è lo strumento con cui un server può verificare un punteggio.
 
@@ -130,19 +141,23 @@ assets/verrian/local-state.js  record, storico e partita da riprendere
 assets/verrian/toolbar-state.js  stato iniziale dei pulsanti audio ed effetti
 assets/verrian/level-format.js  formato, controlli e link dei livelli degli studenti
 editor/index.html, assets/verrian/editor.js|css  officina dei livelli
+api/                       endpoint PHP dell’officina (accesso Google, sessione, livelli)
+server/                    archivio, sessioni, verifica dei token e convalida (non pubblico)
 assets/verrian/audio.js        musica ed effetti sonori
 assets/verrian/terrain-art.js  piattaforme e ostacoli illustrati
 assets/verrian/graphics-loader.js  caricamento di immagini e PixiJS
 assets/verrian/render.js   renderer Canvas 2D
 assets/verrian/render-pixi.js  renderer WebGL (PixiJS)
 assets/verrian/art.js      pose e ritagli degli atlanti grafici
-assets/verrian/*.webp      fondali, personaggi, nemici, oggetti, officina
+assets/verrian/*.webp      fondali, personaggi, nemici, oggetti, bottega dei Big Bros
 assets/verrian/og-verrian-v2.jpg  copertina per le anteprime social
 assets/vendor/pixi-8.22.0  PixiJS (licenza MIT)
 games/verrian/levels.json  livelli (stessa configurazione di index.html)
 games/verrian/art-prompts.json  provenienza delle immagini
 docs/screenshots/          immagini di questo README
 docs/trailer.gif, docs/video/  anteprima animata, trailer e spot per i social
+docs/youtube/              copertine YouTube del trailer e dello spot
+tools/negozio/             prima versione in pixel art della bottega e prompt
 assets/verrian/qr/         QR code verso il sito
 ```
 

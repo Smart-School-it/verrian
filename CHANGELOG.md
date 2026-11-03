@@ -1,5 +1,26 @@
 # Changelog
 
+## 2026-11-03 — La bottega dei Big Bros
+
+- Dopo ogni livello pozioni e potenziamenti li vendono i **Big Bros**, due fratelli in tunica crema e mantello marrone da cavalieri spaziali, con il loro gatto: un persiano rosso tigrato dal muso schiacciato, con occhio, orecchio e collare cibernetici.
+- Una scena unica in pixel art arcade occupa tutta la colonna sinistra della bottega: insegna «BIG BROS», scaffali di pozioni e, dietro il bancone «POZIONI», un fratello che accarezza il gatto e l’altro che porge una pozione luminosa. Quattro fotogrammi animati (carezza, gatto contento, pozione che scintilla, palpebre); animazione ferma con «riduci movimento».
+- La bottega si chiama «Bottega dei Big Bros» e un fumetto mostra le loro proposte, che cambiano a ogni acquisto. Su schermi stretti la scena diventa una striscia accanto al fumetto.
+- Tre illustrazioni a quattro fotogrammi fornite dal docente si alternano a ogni bottega (`big-bros-shop-v4`, `v3`, `v2`): nelle nuove i fratelli, in maglietta e maglione con gli invasori spaziali, assaggiano le pozioni accanto al gatto persiano cyborg. Il fumetto sta sopra l’illustrazione senza coprire l’insegna; su telefono le scene nuove inquadrano fratelli e gatto.
+- Prima di queste, la scena della bottega usava l’illustrazione a quattro fotogrammi fornita dal docente (`assets/verrian/big-bros-shop-v2.webp`, 2008 × 783): i fratelli assaggiano e offrono una pozione rosa accanto al gatto. La prima versione in pixel art resta riproducibile con `scripts/negozio/draw.cjs`; note in `scripts/negozio/LEGGIMI.txt`.
+## 2026-11-02 — Officina: scelta dello sfondo e registro corretto
+
+- Nuovo menu «Sfondo» nell’officina: ogni livello può usare uno sfondo diverso da quello della sua ambientazione, fra nove (Duomo, Stazione Centrale, Naviglio Grande, Castello Sforzesco, Scuola Pietro Verri, Forgia della memoria, Abisso dei glitch, Cittadella del kernel, Città dei dati). Il gioco lo usa con entrambi i motori grafici e ne mostra il luogo nel banner; i livelli già salvati restano invariati. Prompt e procedura per nuovi dipinti di Milano in `scripts/sfondi/LEGGIMI.txt`.
+- Registro dei docenti: con un solo livello il pulsante «Gioca» si sovrapponeva alle date; ora sta a destra della riga.
+
+## 2026-11-02 — Officina dei livelli con accesso Google @verri.edu.it
+
+- L'officina richiede l'accesso con un account Google @verri.edu.it: ogni livello ha un autore verificato. I giocatori vedono solo il soprannome; nome ed e-mail compaiono soltanto ai docenti indicati nella configurazione, nel nuovo **Registro** (anche per i livelli eliminati).
+- I livelli si salvano nell'account con salvataggio automatico; «I miei livelli» legge l'elenco dal server e importa una volta i livelli rimasti nel browser. Copia dal gioco con `/editor/?copia=<id>`, senza ereditare il soprannome. Solo l'autore modifica o elimina; l'eliminazione è logica.
+- Link condivisi `/#livello=<id>`: il gioco scarica il livello registrato e lo ripulisce. I vecchi link autonomi `#livello=1.…` non sono più giocabili (aperti nell'officina dopo l'accesso diventano livelli dell'account).
+- Nuovo backend PHP limitato a `api/` (librerie in `server/`, dati e configurazione in `/var/www/verrian.verri.edu.it-private/`): OpenID Connect con PKCE, verifica della firma del token, CSRF, validazione con lo stesso `level-format.js` del gioco eseguito da Node, registro delle azioni. Virtual host: PHP solo in `api/`, `server/` negato, CSP con `form-action 'self'`.
+- Test `scripts/test-verrian-server.php` (25 controlli) e test dei livelli aggiornati (122 controlli), eseguiti da `check-project.py`.
+- Da completare: ID client OAuth e secret in `config.php` (vedi README, «Configurazione»).
+
 ## 2026-11-02 — Nuovo spot per gli studenti: si gioca dopo la scuola
 
 - Spot verticale di 37 secondi `assets/verrian/video/verrian-promo-v2.webm` (720×1280, VP8 + Opus, copertina `verrian-promo-v2-poster.png`), al posto della versione 1 che invitava a giocare dal telefono «tra una lezione e l’altra», cosa non consentita a scuola.

@@ -1,0 +1,58 @@
+I negozianti della bottega: i Big Bros e il loro gatto cyborg
+=============================================================
+
+Dopo ogni livello la bottega («Bottega dei Big Bros») è gestita da due fratelli, i Big Bros, e dal loro gatto:
+un persiano rosso tigrato (red tabby) dal muso schiacciato e dal pelo folto, con occhio, orecchio e collare cibernetici.
+
+Scene attuali, fornite dal docente, che si alternano a ogni bottega (BIG_BROS_SCENES in game.js):
+  dopo il livello 1: big-bros-shop-v4 («POZIONI & Co.», fratelli in maglietta e maglione, gatto persiano cyborg)
+  dopo il livello 2: big-bros-shop-v3 («POZIONI», stessa ambientazione)
+  dopo il livello 3: big-bros-shop-v2 (fratelli in tunica e mantello); poi si ricomincia.
+Ogni scena: PNG sorgente + WebP usato dal gioco, 2008x783 (v3 ridimensionata da 2009 px), quattro fotogrammi da 502x783.
+Su computer il fumetto sta sopra l'illustrazione; su schermi stretti si vede una striscia (v2: parte bassa; v3 e v4: parte centrale).
+Per aggiungere una scena: stesso formato, una voce in BIG_BROS_SCENES e una regola .vr-shop-scene-<id> in game.css.
+
+Scena big-bros-shop-v2 (dal 3 novembre 2026):
+Quattro fotogrammi da 502x783 affiancati (2008x783): i due fratelli in tunica e mantello dietro il bancone con il loro gatto rosso,
+mentre assaggiano e offrono una pozione rosa. game.css (.vr-shop-scene-art) la mostra a 4 fotogrammi; su schermi stretti si vede
+solo la parte bassa (proporzioni 502/436). Per sostituirla basta un'immagine con le stesse proporzioni e lo stesso numero di fotogrammi.
+
+Versione precedente (non più usata): una scena unica in pixel art arcade disegnata da draw.cjs (nessuna libreria esterna):
+  node scripts/negozio/draw.cjs assets/verrian
+scrive big-bros-shop-v1.png: 4 fotogrammi da 136x212 affiancati. Sopra c'è spazio per il fumetto, poi l'insegna
+«BIG BROS» con due lampade e gli scaffali di pozioni; sotto, dietro il bancone «POZIONI», i due fratelli in tunica
+crema e mantello marrone (stile cavalieri spaziali): quello con i capelli lunghi accarezza il gatto seduto sul bancone,
+quello con i capelli corti porge una pozione luminosa. Fotogrammi: carezza, gatto contento, pozione che scintilla,
+palpebre chiuse. In game.css (.vr-shop-scene) la scena occupa la colonna sinistra della bottega; su schermi stretti
+diventa una striscia con la sola parte del bancone. Le frasi del fumetto sono nell'elenco BIG_BROS di game.js.
+Le foto di riferimento dei due fratelli NON sono salvate nel progetto né su GitHub.
+Pose delle braccia studiate su due foto di Wikimedia Commons, usate solo come riferimento (nessun pixel copiato):
+  carezza: «Young child and an old person are petting grey cute cat» di Nenad Stojkovic, CC BY 2.0
+  presa:   «Hand holding glass of alcohol 20180203» di Santeri Viinamäki, CC BY-SA 4.0
+Proporzioni: avambraccio largo circa un terzo della testa, mano lunga circa tre quarti del viso; ogni braccio resta
+vicino al proprio corpo (il gatto siede davanti al fratello che lo accarezza, la pozione è davanti al petto dell'altro).
+
+Versioni dipinte (facoltative)
+------------------------------
+Generare con un generatore di immagini allegando la foto del fratello come riferimento del volto e
+assets/verrian/verrian-portrait.png come riferimento di stile. PNG con sfondo trasparente, 512x640, busto frontale.
+Si può generare anche l'intera scena (PNG verticale circa 3:5) come big-bros-shop-v2.png: poi in game.css sostituire
+l'immagine di .vr-shop-scene-art e togliere image-rendering:pixelated e l'animazione a quattro fotogrammi.
+
+Scena: Original premium hand-painted 2D arcade game art, same finish as the attached Verrian portrait: crisp dark outlines,
+soft painterly shading, cinematic cyan rim light, Milan in the year 2148. A cosy futuristic potion shop: neon sign, shelves of
+glowing potions, a neon-lit counter. Behind the counter two brothers in original space-knight robes (cream wrap tunic, brown
+hooded cloak with the hood down, leather belt; no logos, no weapons from existing films): the first gently pets the cyborg cat
+sitting on the counter, the second offers a glowing pink potion to the viewer with a friendly smile. No text except the sign.
+
+Fratello 1: Stylized likeness of the man in the reference photo: long light-brown hair slicked straight back from a high
+forehead with a centre parting, falling behind the ears to the neck; grey-blue eyes, long straight nose, light stubble and a
+small goatee, a calm closed-mouth smile. Wears the cream tunic and brown hooded cloak; his hand rests on the cat's head.
+
+Fratello 2: Stylized likeness of the man in the reference photo: short dark-brown hair with a side parting swept to one side,
+short dark beard and moustache, blue-grey eyes, calm confident look. Wears the cream tunic and brown hooded cloak; he holds up a glowing pink potion flask.
+
+Gatto: A red tabby Persian cat (orange with darker tabby stripes and an "M" on the forehead, cream muzzle and chest),
+very flat brachycephalic face, round copper eye, thick fluffy fur and ruff, sitting on a neon shop counter. Cyborg parts:
+the other eye is a glowing cyan lens in a metal ring, one ear is a metal plate with a small antenna tip, a collar of circuits
+with a glowing tag. Cute, slightly grumpy expression typical of Persians.

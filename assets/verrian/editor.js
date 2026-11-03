@@ -6,7 +6,7 @@ const STORE='verrian.editor.v1',GROUND=V.GROUND,BG=['milano-duomo-v1','milano-ce
 const BODY={crawler:[70,44],drone:[64,56],sentinel:[52,100],phase:[52,104],leaper:[58,62],mite:[44,22],turret:[60,70],wraith:[58,78]},BOSS=[[150,190],[180,170],[150,210],[160,220]];
 const TINT={crawler:'#ff6b8a',drone:'#ffb347',sentinel:'#8fa8ff',phase:'#c58cff',leaper:'#7dffb0',mite:'#ff9d5c',turret:'#ffd166',wraith:'#b8f3ff'},PICK={shard:'#7ff6ff',health:'#5dff9a',energy:'#ffe45c',overdrive:'#ffb347',credits:'#ffd166',vehicle:'#d18cff'};
 const clamp=(n,a,b)=>Math.max(a,Math.min(b,n)),snapOn=()=>$('snap').checked;
-let pack,current,store={current:null,levels:[]},tool='select',sel=null,undo=[],redo=[],drag=null,cam={x:0,y:-260,s:.5},pointer=null,dirty=0,images={},lastCheck={errors:[],warnings:[]};
+let pack,current=null,origin=null,session=null,saving=null,queued=false,savedJson='',tool='select',sel=null,undo=[],redo=[],drag=null,cam={x:0,y:-260,s:.5},pointer=null,dirty=0,images={},lastCheck={errors:[],warnings:[]};
 const sub={enemies:'crawler',pickups:'shard',vehicle:'glider',pads:'spring',encounters:'technician'};
 const L=()=>pack.level,grid=v=>snapOn()?Math.round(v/10)*10:Math.round(v);
 // Highest platform top under (x,y), so nodes, enemies and traps land on a surface instead of floating.
@@ -41,11 +41,23 @@ const isFeet=(k,o)=>typeof KINDS[k].feet==='function'?KINDS[k].feet(o):!!KINDS[k
 const TOOLS={select:{label:'Seleziona e sposta',key:'v'},ground:{label:'Suolo',key:'g'},platforms:{label:'Piattaforma',key:'p'},relays:{label:'Nodo',key:'n'},enemies:{label:'Nemico',key:'e'},pickups:{label:'Oggetto',key:'o'},traps:{label:'Trappola',key:'t'},pads:{label:'Pedana',key:'d'},vents:{label:'Getto d’aria',key:'a'},movers:{label:'Piattaforma mobile',key:'m'},lasers:{label:'Laser',key:'l'},secrets:{label:'Muro segreto',key:'s'},encounters:{label:'Tecnico o cassa',key:'c'},erase:{label:'Gomma',key:'x'}};
 const SUBS={enemies:V.ENEMIES,pickups:V.PICKUPS,pads:{spring:'Pedana di lancio',speed:'Corsia di accelerazione'},encounters:{technician:'Tecnico da liberare',cache:'Cassa del tesoro'}};
 
-// ---- storage: a small library of levels in this browser
-function loadStore(){try{const s=JSON.parse(localStorage.getItem(STORE)||'null');if(s&&Array.isArray(s.levels))store={current:s.current,levels:s.levels.filter(e=>e&&e.id&&e.pack).slice(0,30)};}catch{}}
-function saveStore(){try{localStorage.setItem(STORE,JSON.stringify(store));$('saved').textContent='Salvato in questo browser · '+new Date().toLocaleTimeString('it-IT',{hour:'2-digit',minute:'2-digit'});}catch{$('saved').textContent='Salvataggio nel browser non disponibile: esporta il file per non perdere il lavoro.';}}
-function persist(){clearTimeout(dirty);dirty=setTimeout(()=>{const e=store.levels.find(e=>e.id===current);if(e){e.pack=pack;e.updated=Date.now();}else store.levels.unshift({id:current,updated:Date.now(),pack});store.current=current;store.levels.sort((a,b)=>b.updated-a.updated);store.levels.length=Math.min(store.levels.length,30);saveStore();},350);}
-function open(p,id){pack=V.clean(p);current=id||'l'+Date.now().toString(36)+Math.random().toString(36).slice(2,6);sel=null;undo=[];redo=[];fit();levelForm();themeNote();changed(false);if(!id)persist();}
+// ---- server: levels belong to the signed-in @verri.edu.it account; the browser only keeps a backup of unsaved changes
+const BACKUP='verrian.editor.backup.v2';
+async function api(path,body){const opts=body?{method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/json','X-CSRF-Token':session?.csrf||''},body:JSON.stringify(body)}:{credentials:'same-origin',cache:'no-store'};let r;
+ try{r=await fetch('/api/'+path,opts);}catch{throw Error('Server non raggiungibile: controlla la connessione.');}
+ const d=await r.json().catch(()=>null);if(r.status===401){session.user=null;gate();}if(!r.ok||!d?.ok)throw Error(d?.error||'Servizio non disponibile, riprova tra poco.');return d;}
+function backup(){try{localStorage.setItem(BACKUP,JSON.stringify({email:session?.user?.email,id:current,origin,pack,at:Date.now()}));}catch{}}
+function dropBackup(){try{localStorage.removeItem(BACKUP);}catch{}}
+function persist(){backup();$('saved').textContent='Modifiche da salvare…';clearTimeout(dirty);dirty=setTimeout(saveNow,1200);}
+// One save at a time; changes made meanwhile are sent right after. Resolves with the level id.
+async function saveNow(){clearTimeout(dirty);if(!pack||!session?.user)return current;if(saving){queued=true;return saving;}
+ const json=JSON.stringify(pack);if(current&&json===savedJson)return current;
+ saving=(async()=>{try{const d=await api('levels.php',{action:'save',id:current,pack,origin:current?null:origin});current=d.level.id;savedJson=json;if(JSON.stringify(pack)===json)dropBackup();
+   $('saved').textContent='Salvato nel tuo account · '+new Date().toLocaleTimeString('it-IT',{hour:'2-digit',minute:'2-digit'});return current;}
+  catch(e){$('saved').textContent='Non salvato: '+e.message+' Le modifiche restano in questo browser.';throw e;}
+  finally{saving=null;if(queued){queued=false;setTimeout(()=>saveNow().catch(()=>{}),50);}}})();
+ return saving;}
+function open(p,id=null,from=null){pack=V.clean(p);current=id;origin=from;savedJson=id?JSON.stringify(pack):'';sel=null;undo=[];redo=[];fit();levelForm();themeNote();changed(false);}
 
 // ---- history
 function commit(){undo.push(JSON.stringify(pack));if(undo.length>100)undo.shift();redo=[];}
@@ -66,7 +78,7 @@ function loadImage(name){if(images[name])return images[name];const img=new Image
 // ---- drawing
 function draw(){if(!pack)return;const d=devicePixelRatio||1,{w,h}=view(),lv=L(),t=V.THEMES[pack.theme];c.setTransform(d,0,0,d,0,0);
  const g=c.createLinearGradient(0,0,0,h);g.addColorStop(0,'#050b16');g.addColorStop(1,shade(lv.secondary,.18));c.fillStyle=g;c.fillRect(0,0,w,h);
- const img=loadImage(BG[pack.theme]);if(img.complete&&img.naturalWidth){const s=Math.max(w/img.naturalWidth,h/img.naturalHeight);c.globalAlpha=.16;c.drawImage(img,(w-img.naturalWidth*s)/2,(h-img.naturalHeight*s)/2,img.naturalWidth*s,img.naturalHeight*s);c.globalAlpha=1;}
+ const img=loadImage(L().backdrop||BG[pack.theme]);if(img.complete&&img.naturalWidth){const s=Math.max(w/img.naturalWidth,h/img.naturalHeight);c.globalAlpha=.16;c.drawImage(img,(w-img.naturalWidth*s)/2,(h-img.naturalHeight*s)/2,img.naturalWidth*s,img.naturalHeight*s);c.globalAlpha=1;}
  c.save();c.scale(cam.s,cam.s);c.translate(-cam.x,-cam.y);
  const [x0,y0]=toWorld(0,0),[x1,y1]=toWorld(w,h),step=cam.s<.35?100:cam.s<.8?50:20;c.lineWidth=1/cam.s;
  c.strokeStyle='#ffffff0d';c.beginPath();for(let x=Math.floor(x0/step)*step;x<x1;x+=step){c.moveTo(x,y0);c.lineTo(x,y1);}for(let y=Math.floor(y0/step)*step;y<y1;y+=step){c.moveTo(x0,y);c.lineTo(x1,y);}c.stroke();
@@ -146,7 +158,7 @@ canvas.addEventListener('wheel',e=>{e.preventDefault();const r=canvas.getBoundin
 map.addEventListener('pointerdown',e=>{map.setPointerCapture(e.pointerId);const go=ev=>{const r=map.getBoundingClientRect(),{w,h}=view();cam.x=(ev.clientX-r.left)/ +map.dataset.sx-w/2/cam.s;cam.y=(ev.clientY-r.top)/ +map.dataset.sy+ +map.dataset.top-h/2/cam.s;draw();};go(e);map.onpointermove=ev=>{if(ev.buttons)go(ev);};});
 
 // ---- keyboard
-document.addEventListener('keydown',e=>{if(e.target.closest('input,select,textarea,dialog'))return;const k=e.key.toLowerCase(),mod=e.ctrlKey||e.metaKey;
+document.addEventListener('keydown',e=>{if(document.body.classList.contains('ve-locked')||e.target.closest('input,select,textarea,dialog'))return;const k=e.key.toLowerCase(),mod=e.ctrlKey||e.metaKey;
  if(mod&&k==='z'){e.preventDefault();e.shiftKey?back(redo,undo):back(undo,redo);return;}if(mod&&k==='y'){e.preventDefault();back(redo,undo);return;}
  if(mod&&k==='d'){e.preventDefault();duplicate();return;}if(mod&&k==='s'){e.preventDefault();persist();status('Livello salvato in questo browser.');return;}
  if((k==='delete'||k==='backspace')&&sel){e.preventDefault();remove();return;}
@@ -167,10 +179,10 @@ function props(light){const box=$('props'),s=objectOf(sel);if(light&&s&&box.data
  const actions=document.createElement('div');actions.className='ve-row';if(!k.single){const dup=button('Duplica',duplicate),del=button('Elimina',remove);del.classList.add('ve-danger');actions.append(dup,del);}actions.append(button('Centra',()=>look(k.at(s)[0])));box.replaceChildren(h,...form,actions);}
 let fields=[];
 function button(text,fn){const b=document.createElement('button');b.type='button';b.className='ve-btn';b.textContent=text;b.onclick=fn;return b;}
-function levelForm(){const lv=L();$('title').value=lv.title;$('story').value=lv.story;$('author').value=pack.author;$('theme').value=String(pack.theme);$('width').value=lv.width;$('color').value=lv.color;}
+function levelForm(){const lv=L();$('title').value=lv.title;$('story').value=lv.story;$('author').value=pack.author;$('theme').value=String(pack.theme);$('backdrop').value=lv.backdrop||'';$('width').value=lv.width;$('color').value=lv.color;}
 function bindLevelForm(){
  const on=(id,fn)=>$(id).addEventListener('change',()=>{commit();fn($(id).value);settle();changed();});
- on('title',v=>L().title=v.slice(0,60));on('story',v=>L().story=v.slice(0,160));on('author',v=>pack.author=v.slice(0,30));on('color',v=>L().color=v);
+ on('title',v=>L().title=v.slice(0,60));on('story',v=>L().story=v.slice(0,160));on('author',v=>pack.author=v.slice(0,30));on('color',v=>L().color=v);on('backdrop',v=>L().backdrop=v);
  on('theme',v=>{const old=V.THEMES[pack.theme],t=V.THEMES[+v];pack.theme=+v;L().id=t.id;if(L().color===old.color)L().color=t.color;if(L().secondary===old.secondary)L().secondary=t.secondary;if(L().boss.name===old.boss)L().boss.name=t.boss;levelForm();themeNote();});
  on('width',v=>{const lv=L(),w=clamp(Math.round(+v||0),1600,8000),d=w-lv.width;lv.width=w;lv.exit_x=clamp(lv.exit_x+d,700,w-40);lv.gate_x=clamp(lv.gate_x+d,300,lv.exit_x-300);lv.boss.x=clamp(lv.boss.x+d,lv.gate_x+150,lv.exit_x-100);levelForm();});}
 function themeNote(){const t=V.THEMES[pack.theme];$('theme-note').textContent='Sfondo, musica e boss di «'+t.name+'». Attacco del boss: '+t.attack+'.';}
@@ -179,33 +191,60 @@ function checks(){clearTimeout(checks.t);checks.t=setTimeout(()=>{const r=V.chec
  const lv=L();$('counts').textContent=lv.platforms.length+' piattaforme · '+lv.relays.length+' nodi · '+lv.enemies.length+' nemici · '+lv.pickups.filter(p=>p.kind==='shard').length+' frammenti';draw();},120);}
 
 // ---- library, files and sharing
-function libraryDialog(){const ul=$('library-list');ul.replaceChildren(...store.levels.map(e=>{const li=document.createElement('li'),t=document.createElement('div');t.innerHTML='<strong></strong><small></small>';t.firstChild.textContent=e.pack.level?.title||'Senza titolo';t.lastChild.textContent=V.THEMES[e.pack.theme||0].name+' · '+new Date(e.updated).toLocaleString('it-IT',{dateStyle:'short',timeStyle:'short'})+(e.id===current?' · aperto ora':'');const openB=button('Apri',()=>{persistNow();open(e.pack,e.id);$('library').close();status('Aperto «'+L().title+'».');}),del=button('Elimina',()=>{if(!confirm('Eliminare «'+(e.pack.level?.title||'questo livello')+'» da questo browser?'))return;store.levels=store.levels.filter(x=>x!==e);saveStore();if(e.id===current)open(V.blank(0));libraryDialog();});del.classList.add('ve-danger');li.append(t,openB,del);return li;}));if(!store.levels.length)ul.append(Object.assign(document.createElement('li'),{textContent:'Ancora nessun livello salvato.'}));if(!$('library').open)$('library').showModal();}
-function persistNow(){if(!pack)return;clearTimeout(dirty);const e=store.levels.find(e=>e.id===current);if(e){e.pack=pack;e.updated=Date.now();}else store.levels.unshift({id:current,updated:Date.now(),pack});store.current=current;saveStore();}
-let official=null;async function template(i){try{official??=(await (await fetch('../games/verrian/levels.json')).json()).levels;persistNow();const lv=JSON.parse(JSON.stringify(official[i]));lv.title=lv.title+' · remix';open({format:V.FORMAT,theme:i,author:pack.author,level:lv});$('library').close();status('Nuovo livello creato da «'+official[i].title+'»: modificalo come vuoi.');}catch{status('Impossibile caricare i mondi ufficiali. Controlla la connessione.');}}
-function slug(s){return s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')||'livello';}
+async function libraryDialog(){const ul=$('library-list');ul.replaceChildren(Object.assign(document.createElement('li'),{textContent:'Caricamento dei tuoi livelli…'}));if(!$('library').open)$('library').showModal();
+ let list;try{await saveNow().catch(()=>{});list=(await api('levels.php?mine=1')).levels;}catch(e){ul.replaceChildren(Object.assign(document.createElement('li'),{textContent:e.message}));return;}
+ ul.replaceChildren(...list.map(e=>{const li=document.createElement('li'),t=document.createElement('div');t.innerHTML='<strong></strong><small></small>';t.firstChild.textContent=e.title||'Senza titolo';t.lastChild.textContent=V.THEMES[e.theme||0].name+' · '+new Date(e.updated_at).toLocaleString('it-IT',{dateStyle:'short',timeStyle:'short'})+(e.playable?'':' · da completare')+(e.id===current?' · aperto ora':'');
+  const openB=button('Apri',()=>load(e.id).then(()=>$('library').close())),del=button('Elimina',async()=>{if(!confirm('Eliminare «'+(e.title||'questo livello')+'»? Il link smetterà di funzionare; nel registro resta traccia che il livello era tuo.'))return;try{await api('levels.php',{action:'delete',id:e.id});if(e.id===current){open(V.blank(0),null,'vuoto');dropBackup();}libraryDialog();status('Livello eliminato.');}catch(err){status(err.message);}});del.classList.add('ve-danger');li.append(t,openB,del);return li;}));
+ if(!list.length)ul.append(Object.assign(document.createElement('li'),{textContent:'Ancora nessun livello salvato nel tuo account.'}));legacyOffer();}
+async function load(id){try{await saveNow().catch(()=>{});const d=await api('levels.php?own='+encodeURIComponent(id));open(d.pack,d.level.id);status('Aperto «'+L().title+'».');}catch(e){status(e.message);}}
+// Levels made before sign-in was required live only in this browser: they can be moved into the account once.
+function legacyLevels(){try{const s=JSON.parse(localStorage.getItem(STORE)||'null');return Array.isArray(s?.levels)?s.levels.filter(e=>e?.pack):[];}catch{return [];}}
+function legacyOffer(){const box=$('legacy'),list=legacyLevels();box.hidden=!list.length;if(!list.length)return;$('legacy-count').textContent=list.length===1?'1 livello creato':''+list.length+' livelli creati';}
+async function legacyImport(){const list=legacyLevels();let n=0;for(const e of list){try{await api('levels.php',{action:'save',id:null,pack:V.clean(e.pack),origin:'browser'});n++;}catch(err){status(err.message);break;}}if(n===list.length)try{localStorage.removeItem(STORE);}catch{}status(n+(n===1?' livello importato':' livelli importati')+' nel tuo account.');libraryDialog();}
+let official=null;async function template(i){try{official??=(await (await fetch('../games/verrian/levels.json')).json()).levels;await saveNow().catch(()=>{});const lv=JSON.parse(JSON.stringify(official[i]));lv.title=lv.title+' · remix';open({format:V.FORMAT,theme:i,author:pack.author,level:lv},null,'remix:'+i);$('library').close();status('Nuovo livello creato da «'+official[i].title+'»: modificalo come vuoi, si salva da solo.');}catch{status('Impossibile caricare i mondi ufficiali. Controlla la connessione.');}}
+function slug(s){return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')||'livello';}
 function exportFile(){const blob=new Blob([JSON.stringify(V.clean(pack),null,1)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=slug(L().title)+'.verrian.json';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),2000);status('File scaricato: puoi consegnarlo al docente o riaprirlo con Importa.');}
-async function importFile(file){try{if(file.size>500000)throw Error('File troppo grande.');const p=V.clean(JSON.parse(await file.text()));persistNow();open(p);status('Importato «'+L().title+'».');}catch(e){status('File non valido: '+(e.message||'formato sconosciuto')+'.');}}
-async function playUrl(){return new URL('../#livello='+await V.encode(pack),location.href).href;}
-async function test(){const r=V.check(V.clean(pack));if(!r.ok){status('Prima di provare il livello correggi: '+r.errors[0].text);look(r.errors[0].x);$('check').scrollIntoView({block:'nearest'});return;}persistNow();const url=await playUrl(),w=window.open(url,'verrian-prova');if(!w)location.href=url;else status('Il livello si apre nella scheda del gioco. Torna qui per modificarlo.');}
-async function share(){const r=V.check(V.clean(pack));if(!r.ok){status('Il livello non è ancora giocabile: '+r.errors[0].text);return;}const url=await playUrl();$('share-link').value=url;$('share-size').textContent='Il link contiene l’intero livello ('+url.length.toLocaleString('it-IT')+' caratteri): nulla viene caricato su un server.';$('share').showModal();$('share-link').select();}
+async function importFile(file){try{if(file.size>500000)throw Error('File troppo grande.');const p=V.clean(JSON.parse(await file.text()));await saveNow().catch(()=>{});open(p,null,'file');await saveNow();status('Importato «'+L().title+'» nel tuo account.');}catch(e){status('Importazione non riuscita: '+(e.message||'formato sconosciuto')+'.');}}
+// Waits for the save that holds the latest change too, not only the one already in flight.
+async function playUrl(){let id=await saveNow();for(let i=0;i<5&&(saving||JSON.stringify(pack)!==savedJson);i++)id=await(saving||saveNow());return new URL('/#livello='+id,location.href).href;}
+async function test(){const r=V.check(V.clean(pack));if(!r.ok){status('Prima di provare il livello correggi: '+r.errors[0].text);look(r.errors[0].x);$('check').scrollIntoView({block:'nearest'});return;}
+ const w=window.open('','verrian-prova');let url;try{url=await playUrl();}catch(e){w?.close();status('Prova non disponibile: '+e.message);return;}
+ // A fresh query makes the test tab reload even when it already shows this level's link.
+ url=url.replace('/#','/?prova='+Date.now().toString(36)+'#');if(w)w.location.href=url;else location.href=url;status('Il livello si apre nella scheda del gioco. Torna qui per modificarlo.');}
+async function share(){const r=V.check(V.clean(pack));if(!r.ok){status('Il livello non è ancora giocabile: '+r.errors[0].text);return;}let url;try{url=await playUrl();}catch(e){status('Condivisione non disponibile: '+e.message);return;}$('share-link').value=url;$('share-size').textContent='Il link apre la versione salvata nel tuo account: anche le modifiche successive arrivano a chi lo riapre. I giocatori vedono solo il soprannome '+(pack.author?'«'+pack.author+'»':'(non indicato)')+'.';$('share').showModal();$('share-link').select();}
+async function registry(){const ul=$('registry-list');ul.replaceChildren(Object.assign(document.createElement('li'),{textContent:'Caricamento del registro…'}));if(!$('registry').open)$('registry').showModal();
+ try{const list=(await api('levels.php?all=1')).levels;ul.replaceChildren(...list.map(e=>{const li=document.createElement('li'),t=document.createElement('div');t.innerHTML='<strong></strong><small></small><small></small>';t.children[0].textContent=(e.title||'Senza titolo')+(e.deleted_at?' · eliminato':'');t.children[1].textContent=e.author_name+' · '+e.author_email+(e.nickname?' · soprannome «'+e.nickname+'»':'');t.children[2].textContent='Creato '+new Date(e.created_at).toLocaleString('it-IT',{dateStyle:'short',timeStyle:'short'})+' · modificato '+new Date(e.updated_at).toLocaleString('it-IT',{dateStyle:'short',timeStyle:'short'})+' · '+e.versions+' salvataggi'+(e.origin?' · origine '+e.origin:'');li.append(t);if(!e.deleted_at&&e.playable){const a=document.createElement('a');a.className='ve-btn';a.href='/#livello='+e.id;a.target='_blank';a.rel='noopener';a.textContent='Gioca';li.append(a);}return li;}));if(!list.length)ul.append(Object.assign(document.createElement('li'),{textContent:'Nessun livello ancora.'}));}catch(e){ul.replaceChildren(Object.assign(document.createElement('li'),{textContent:e.message}));}}
 async function copy(text,what){try{await navigator.clipboard.writeText(text);status(what+' copiato negli appunti.');}catch{$('share-link').select();status('Seleziona il testo e copialo con Ctrl+C.');}}
 function status(text){$('status').textContent=text;}
 
-// ---- start
+// ---- start: nothing can be edited before signing in with a school account
+function gate(message){const g=$('gate'),cfg=session?.configured!==false;$('gate-text').textContent=cfg?'L’officina dei livelli è riservata agli account @'+(session?.domain||'verri.edu.it')+': così di ogni livello si sa chi l’ha creato. A chi gioca compare soltanto il soprannome che scegli tu.':'L’accesso con Google non è ancora stato attivato su questo sito. Riprova più tardi o avvisa il docente.';
+ $('gate-error').textContent=message||'';$('gate-error').hidden=!message;const a=$('gate-login');a.hidden=!cfg;a.href='/api/login.php?return='+encodeURIComponent('/editor/'+location.search.replace(/[?&]accesso=[^&]*/,'').replace(/^&/,'?'));g.hidden=false;document.body.classList.add('ve-locked');a.focus?.();}
+function signedIn(){$('gate').hidden=true;document.body.classList.remove('ve-locked');$('user-name').textContent=session.user.name;$('user-name').title=session.user.email;$('user').hidden=false;$('registry-open').hidden=!session.admin;}
+async function logout(){await saveNow().catch(()=>{});try{session=(await api('session.php',{action:'logout'}));}catch{}location.href='/editor/';}
+async function boot(){const q=new URLSearchParams(location.search),err=q.get('accesso');
+ try{session=await (await fetch('/api/session.php',{credentials:'same-origin',cache:'no-store'})).json();}catch{session={configured:true,user:null};gate('Server non raggiungibile: controlla la connessione e ricarica la pagina.');return;}
+ if(!session.user){gate(err);return;}signedIn();
+ const copyId=q.get('copia'),oldLink=/[#&]livello=1\./.test(location.hash);
+ if(copyId||oldLink||err)history.replaceState(null,'',location.pathname);
+ try{if(copyId){const d=await api('levels.php',{action:'copy',id:copyId});open(d.pack,d.level.id);status('Hai una copia tutta tua di «'+L().title+'», salvata nel tuo account.');return;}
+  if(oldLink){open(await V.decode(location.hash),null,'link');await saveNow();status('Livello di un vecchio link importato nel tuo account: ora ha un nuovo link da condividere.');return;}}catch(e){status(e.message);}
+ let b=null;try{b=JSON.parse(localStorage.getItem(BACKUP)||'null');}catch{}
+ if(b?.pack&&b.email===session.user.email){open(b.pack,b.id,b.origin);savedJson='';await saveNow().catch(()=>{});status('Recuperate le modifiche non ancora salvate dell’ultima sessione.');return;}
+ try{const list=(await api('levels.php?mine=1')).levels;if(list.length){await load(list[0].id);if(legacyLevels().length)status('Hai anche livelli salvati solo in questo browser: aprili da «I miei livelli» per importarli.');return;}}catch(e){status(e.message);}
+ open(V.blank(0),null,'vuoto');status(legacyLevels().length?'Benvenuto! Hai livelli creati prima dell’accesso: importali da «I miei livelli».':'Benvenuto nell’officina dei livelli: il livello di partenza è già giocabile. Modificalo e premi Prova.');}
 function init(){
  const tools=$('tools');for(const [id,t] of Object.entries(TOOLS)){const b=document.createElement('button');b.type='button';b.dataset.tool=id;b.className='ve-tool ve-tool-'+id;b.title=t.label+' ('+t.key.toUpperCase()+')';b.innerHTML='<i aria-hidden="true"></i><span></span><kbd></kbd>';b.querySelector('span').textContent=t.label;b.querySelector('kbd').textContent=t.key.toUpperCase();b.onclick=()=>setTool(id);tools.append(b);}
  $('variant-select').onchange=e=>{sub[tool]=e.target.value;setTool(tool);};$('vehicle-select').replaceChildren(...Object.entries(V.VEHICLES).map(([v,t])=>new Option(t,v)));$('vehicle-select').onchange=e=>sub.vehicle=e.target.value;
- $('theme').replaceChildren(...V.THEMES.map((t,i)=>new Option((i+1)+' · '+t.name,String(i))));
+ $('theme').replaceChildren(...V.THEMES.map((t,i)=>new Option((i+1)+' · '+t.name,String(i))));$('backdrop').replaceChildren(new Option('Quello dell’ambientazione',''),...Object.entries(V.BACKDROPS).map(([v,t])=>new Option(t,v)));
  $('zoom-in').onclick=()=>zoom(1.25);$('zoom-out').onclick=()=>zoom(1/1.25);$('zoom-fit').onclick=()=>{fit();draw();};
  $('undo').onclick=()=>back(undo,redo);$('redo').onclick=()=>back(redo,undo);$('snap').onchange=()=>draw();
  $('test').onclick=test;$('share-open').onclick=share;$('export').onclick=exportFile;$('import').onclick=()=>$('file').click();$('file').onchange=e=>{if(e.target.files[0])importFile(e.target.files[0]);e.target.value='';};
- $('library-open').onclick=libraryDialog;$('new-blank').onclick=()=>{persistNow();open(V.blank(0));$('library').close();status('Nuovo livello vuoto.');};for(const b of document.querySelectorAll('[data-template]'))b.onclick=()=>template(+b.dataset.template);
+ $('library-open').onclick=libraryDialog;$('new-blank').onclick=async()=>{await saveNow().catch(()=>{});open(V.blank(0),null,'vuoto');$('library').close();status('Nuovo livello vuoto: si salva nel tuo account alla prima modifica.');};for(const b of document.querySelectorAll('[data-template]'))b.onclick=()=>template(+b.dataset.template);
+ $('legacy-import').onclick=legacyImport;$('logout').onclick=logout;$('registry-open').onclick=registry;
  $('copy-link').onclick=()=>copy($('share-link').value,'Link');
- bindLevelForm();loadStore();addEventListener('resize',resize);addEventListener('pagehide',persistNow);document.addEventListener('visibilitychange',()=>{if(document.hidden)persistNow();});
- const fromLink=/[#&]livello=/.test(location.hash);
- setTool('select');resize();if(!fromLink)start();
- else V.fromHash(location.hash).then(p=>{open(p);L().title=L().title.slice(0,52)+' · copia';levelForm();persistNow();history.replaceState(null,'',location.pathname);status('Livello ricevuto da un link: ne hai una copia tutta tua, salvata in questo browser.');}).catch(e=>{status(e.message+' Si apre il tuo ultimo livello.');start();});
+ bindLevelForm();addEventListener('resize',resize);addEventListener('pagehide',()=>{if(pack&&JSON.stringify(pack)!==savedJson)backup();});
+ setTool('select');resize();boot();
 }
-function start(){const e=store.levels.find(e=>e.id===store.current)||store.levels[0];if(e)open(e.pack,e.id);else{open(V.blank(0));status('Benvenuto nell’officina dei livelli: il livello di partenza è già giocabile. Modificalo e premi Prova.');}themeNote();}
 init();
 })();
